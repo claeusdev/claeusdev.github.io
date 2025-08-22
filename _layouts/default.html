@@ -1,13 +1,26 @@
 <!DOCTYPE html>
 <html>
-  {% include head.html %}
-  <body>
-    <div class="page-content">
+{% include head.html %}
+
+<body>
+  <div class="page-content">
+    <section class="site-header">
+      <h1 class="smallcap">
+        <a class="site-title" href="{{ '/' | prepend: site.baseurl | prepend: site.url }}">{{ site.title }}</a>
+      </h1>
+      {% include nav.html %}
+    
+    </section>
+    <main class="content">
       {{ content }}
-      <div class="copyright">
-        <p>&copy; {{ site.time | date: '%Y' }} <a href="{{ '/' | prepend: site.baseurl | prepend: site.url }}"><strong>{{ site.title }}</strong></a> ― Powered by <a href="https://jekyllrb.com/">Jekyll</a> and <a href="https://github.com/heiswayi/textlog">Textlog theme</a></p>
-      </div>
+    </main>
+    <div class="copyright">
+      <p>&copy; {{ site.time | date: '%Y' }} <a href="{{ '/' | prepend: site.baseurl | prepend: site.url }}"><strong>{{
+            site.title }}</strong></a> ― Powered by <a href="https://jekyllrb.com/">Jekyll</a> and <a
+          href="https://github.com/heiswayi/textlog">Textlog theme</a></p>
     </div>
-    <!-- {% include google_analytics.html %} -->
-  </body>
+  </div>
+  <!-- {% include google_analytics.html %} -->
+</body>
+
 </html>
