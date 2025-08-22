@@ -1,9 +1,9 @@
 # Site settings
-title: "TextLog"
-description: "Minimalist Jekyll theme for documentation site"
-baseurl: "/textlog" # required if used under gh-pages branch, else (under master branch) just leave empty/blank
+title: "Nana Adjei Manu"
+description: "Computer Programmer and Researcher"
+baseurl: "" # required if used under gh-pages branch, else (under master branch) just leave empty/blank
 url: ""
-author: "John Doe"
+author: "Nana Adjei Manu"
 
 # Build settings
 kramdown:
