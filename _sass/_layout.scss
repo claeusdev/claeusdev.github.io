@@ -75,7 +75,7 @@ main {
 .page-content {
     position: relative;
     padding: $spacing-unit ($spacing-unit * 0.75);
-    margin: 1rem;
+    margin: 1rem auto;
     box-sizing: border-box;
     max-width: $max-width;
 }
