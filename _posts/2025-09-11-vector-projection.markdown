@@ -5,8 +5,6 @@ date: 2025-09-11
 categories: "data-science"
 ---
 
-# Unveiling the "Shadow Play": How to Simplify Complex Data with Vector Projection
-
 Imagine trying to understand a big, ultra-modern city from a satellite view (think of the view when your plane is descending to land). You see all the buildings, roads, and other intricate details. You will agree with me that, it's a lot to take in. Now let's imagine looking at a simplified map of that same city, highlighting only the main highways and landmarks, thus, a lot of the intricate details removed or supressed. 
 Much easier to understand, right? This analogy perfectly captures the essence of **vector projection from high-dimensional to low-dimensional space** in data science. 
 It's a powerful technique that allows us to take incredibly complex datasets with many features (dimensions) and simplify them into a more manageable, easier-to-understand form.
