@@ -3,11 +3,14 @@ layout: page
 title: Projects
 ---
 
-* [Awesome Project Title](https://github.com/your-username/awesome-project)
-    A short description of the project goes here. You can talk about the technology stack (e.g., React, Python, PostgreSQL) and the main purpose of the application.
+* [L-Language](https://github.com/claeusdev/l-lang)
+    Minimal functional programming language implemented in Haskell and React for visualizing evaluation and semantics.
 
-* [Data Visualization Dashboard](https://your-portfolio.com/data-viz-project)
-    This project uses D3.js and a public API to create interactive charts that visualize economic trends over the last 50 years.
+* [Rtpl](https://github.com/claeusdev/rtpipe)
+    Real-time low-latency market data processing system achieving sub-5ms message latency for trading applications.
 
-* [Mobile App for Task Management](https://example.com/link-to-your-app)
-    A cross-platform mobile application built with Flutter to help users organize their daily tasks with a clean and intuitive interface.
+* [Sqll](https://github.com/claeusdev/sqll)
+    Open-source SQL client library for Python using SQLite for embedded workflows.
+
+* [Pricc](https://github.com/claeusdev/pricc)
+    C project generator written in Rust to simplify boilerplate systems development.
