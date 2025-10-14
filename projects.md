@@ -3,11 +3,17 @@ layout: page
 title: Projects
 ---
 
-* [Awesome Project Title](https://github.com/your-username/awesome-project)
-    A short description of the project goes here. You can talk about the technology stack (e.g., React, Python, PostgreSQL) and the main purpose of the application.
+* [sqll](https://github.com/your-username/sqll)
+    A SQL query language implementation or database-related project. [Description needed - please update with actual project details]
 
-* [Data Visualization Dashboard](https://your-portfolio.com/data-viz-project)
-    This project uses D3.js and a public API to create interactive charts that visualize economic trends over the last 50 years.
+* [rtpl](https://github.com/your-username/rtpl)
+    Real-time template language or runtime template processing library. [Description needed - please update with actual project details]
 
-* [Mobile App for Task Management](https://example.com/link-to-your-app)
-    A cross-platform mobile application built with Flutter to help users organize their daily tasks with a clean and intuitive interface.
+* [pricc](https://github.com/your-username/pricc)
+    Price calculation or pricing-related application. [Description needed - please update with actual project details]
+
+* [brache](https://github.com/your-username/brache)
+    Branch management or version control related tool. [Description needed - please update with actual project details]
+
+* [l-lang](https://github.com/your-username/l-lang)
+    A programming language implementation or language-related project. [Description needed - please update with actual project details]
