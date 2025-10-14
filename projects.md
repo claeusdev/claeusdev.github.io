@@ -3,17 +3,14 @@ layout: page
 title: Projects
 ---
 
-* [sqll](https://github.com/your-username/sqll)
-    A SQL query language implementation or database-related project. [Description needed - please update with actual project details]
+* [L-Language](https://github.com/claeusdev/l-lang)
+    Minimal functional programming language implemented in Haskell and React for visualizing evaluation and semantics.
 
-* [rtpl](https://github.com/your-username/rtpl)
-    Real-time template language or runtime template processing library. [Description needed - please update with actual project details]
+* [Rtpl](https://github.com/claeusdev/rtpipe)
+    Real-time low-latency market data processing system achieving sub-5ms message latency for trading applications.
 
-* [pricc](https://github.com/your-username/pricc)
-    Price calculation or pricing-related application. [Description needed - please update with actual project details]
+* [Sqll](https://github.com/claeusdev/sqll)
+    Open-source SQL client library for Python using SQLite for embedded workflows.
 
-* [brache](https://github.com/your-username/brache)
-    Branch management or version control related tool. [Description needed - please update with actual project details]
-
-* [l-lang](https://github.com/your-username/l-lang)
-    A programming language implementation or language-related project. [Description needed - please update with actual project details]
+* [Pricc](https://github.com/claeusdev/pricc)
+    C project generator written in Rust to simplify boilerplate systems development.
