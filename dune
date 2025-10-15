@@ -1,0 +1,25 @@
+(executable
+ (name virtual_dom)
+ (modules virtual_dom)
+ (libraries))
+
+(executable
+ (name todo_app)
+ (modules todo_app)
+ (libraries virtual_dom))
+
+(executable
+ (name performance_test)
+ (modules performance_test)
+ (libraries virtual_dom))
+
+(executable
+ (name dom_renderer)
+ (modules dom_renderer)
+ (libraries virtual_dom js_of_ocaml js_of_ocaml-lib))
+
+(executable
+ (name virtual_dom_js)
+ (modules virtual_dom)
+ (libraries js_of_ocaml js_of_ocaml-lib)
+ (modes js))

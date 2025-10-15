@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual DOM in OCaml</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .app {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .todo-app {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .todo-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .todo-list li {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .todo-list li.completed {
+            text-decoration: line-through;
+            color: #999;
+        }
+        
+        .filters {
+            margin: 20px 0;
+        }
+        
+        .filters button {
+            margin-right: 10px;
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+        }
+        
+        .filters button:hover {
+            background: #f0f0f0;
+        }
+        
+        button {
+            padding: 8px 16px;
+            border: 1px solid #007bff;
+            background: #007bff;
+            color: white;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        
+        button:hover {
+            background: #0056b3;
+        }
+        
+        input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-right: 10px;
+            width: 300px;
+        }
+        
+        h1, h2 {
+            color: #333;
+        }
+        
+        .performance-stats {
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>Virtual DOM in OCaml</h1>
+        <p>Loading the virtual DOM application...</p>
+    </div>
+    
+    <div class="performance-stats">
+        <h2>Performance Information</h2>
+        <p>This virtual DOM implementation demonstrates:</p>
+        <ul>
+            <li>Efficient diffing algorithms</li>
+            <li>Immutable data structures</li>
+            <li>Type-safe component system</li>
+            <li>Functional programming principles</li>
+        </ul>
+    </div>
+    
+    <!-- Load the compiled JavaScript -->
+    <script src="virtual_dom_js.js"></script>
+</body>
+</html>
