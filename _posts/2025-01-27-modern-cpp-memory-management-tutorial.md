@@ -1,3 +1,11 @@
+---
+layout: "post"
+date: 2025-01-27
+title: "Modern C++ Memory Management: A Comprehensive Tutorial"
+categories: "programming"
+draft: false
+---
+
 # Modern C++ Memory Management: A Comprehensive Tutorial
 
 ## Table of Contents
