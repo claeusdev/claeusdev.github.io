@@ -1,3 +1,12 @@
+---
+layout: "post"
+date: 2025-01-27
+title: "RAII in C++: Resource Acquisition Is Initialization"
+categories: "programming"
+tags: ["c++", "raii", "memory-management", "best-practices"]
+draft: false
+---
+
 # RAII in C++: Resource Acquisition Is Initialization
 
 ## Introduction
