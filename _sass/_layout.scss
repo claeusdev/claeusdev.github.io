@@ -43,9 +43,6 @@ main {
     border-bottom: 1px solid $grey-color-light;
     margin-top: -2rem;
     max-width: $max-width;
-    p {
-      font-size: $small-font-size;
-    }
     .site-intro {
         font-size: $big-font-size;
     }
@@ -75,7 +72,7 @@ main {
 .page-content {
     position: relative;
     padding: $spacing-unit ($spacing-unit * 0.75);
-    margin: 1rem auto;
+    margin: 1rem ;
     box-sizing: border-box;
     max-width: $max-width;
 }
