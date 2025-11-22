@@ -1,21 +1,10 @@
-# Site settings
-title: "Nana Adjei Manu"
-description: "Computer Programmer and Researcher"
-baseurl: "" # required if used under gh-pages branch, else (under master branch) just leave empty/blank
-url: ""
-author: "Nana Adjei Manu"
+title: Nana Adjei Manu
+description: Computer Programmer and Researcher
+url: "https://nanamanu.com"
+author: Nana Adjei Manu
+email: n.k.a.manu06@gmail.com
 
-# Build settings
-kramdown:
-  input: GFM
-permalink: pretty
-
-# Third-party services
-# just leave empty to disable it
-google_analytics:
-disqus_shortname: 
-
+markdown: kramdown
+theme: null
 plugins:
-  - jekyll-sitemap
-
-exclude: ["LICENSE", "README.md", "CNAME", "vendor", "Gemfile", "script"]
+  - jekyll-feed

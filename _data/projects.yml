@@ -1,0 +1,19 @@
+- name: "L-Language"
+  description: "Minimal functional programming language implemented in Haskell and React for visualizing evaluation and semantics."
+  url: "https://github.com/claeusdev/l-lang"
+  tags: ["Haskell", "React", "PLT"]
+
+- name: "Rtpl"
+  description: "Real-time low-latency market data processing system achieving sub-5ms message latency for trading applications."
+  url: "https://github.com/claeusdev/rtpipe"
+  tags: ["Systems", "Trading", "Low Latency"]
+
+- name: "Sqll"
+  description: "Open-source SQL client library for Python using SQLite for embedded workflows."
+  url: "https://github.com/claeusdev/sqll"
+  tags: ["Python", "SQL", "Library"]
+
+- name: "Pricc"
+  description: "C project generator written in Rust to simplify boilerplate systems development."
+  url: "https://github.com/claeusdev/pricc"
+  tags: ["Rust", "C", "Tooling"]
