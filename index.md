@@ -3,22 +3,29 @@ layout: default
 title: Home
 ---
 
-I’m a Computer Programmer, Software Engineer and Researcher. My experience involves building distributed web systems and related tooling. I am currently researching operational semantics functional programming.
+<h1>Bio</h1>
+  <p>
+  I’m a Computer Programmer, Software Engineer and Researcher. My experience involves building distributed web systems and related tooling. I am currently researching operational semantics functional programming.
+  </p>
+  <p>
+  My interests include but not limited to programming language theory, distributed systems, computational finance and data systems.
+  </p>
+  <p>
+  I've worked at <a href="https://rhino.com">Rhino</a>, <a href="https://leafly.com">Leafly</a>, <a href="https://andela.com">Andela</a>, <a href="https://expresspaygh.com">Expresspay</a>, <a href="https://housinganywhere.com">HousingAnywhere</a> & <a href="https://petraonline.com">PetraTrust</a>.
+  </p>
 
-My interests include but not limited to programming language theory, distributed systems, computational finance and data systems.
+<div id="home">
+  <h1>Blog Posts</h1>
+  <ul class="posts">
+    {% for post in site.posts %}
+      <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a></li>
+    {% endfor %}
+  </ul>
 
-I've worked at <span class="company-name">[Rhino](https://rhino.com)</span>, <span class="company-name">[Leafly](https://leafly.com)</span>, <span class="company-name">[Andela](https://andela.com)</span>, <span class="company-name">[Expresspay](https://expresspaygh.com)</span>, <span class="company-name">[HousingAnywhere](https://housinganywhere.com)</span> & <span class="company-name">[PetraTrust](https://petraonline.com)</span>.
-
-I’m available online: [Twitter](https://twitter.com/nmanu) • [Linkedin](https://linkedin.com/in/nanaadjeimanu) • [Github](https://github.com/claeusdev)
-
-# Open Source Projects
-
-{% for project in site.data.projects %}
-* <span class="project-name">[{{ project.name }}]({{ project.url }})</span> — {{ project.description }}
-{% endfor %}
-
-# Blog
-
-{% for post in site.posts %}
-* <span class="post-date">{{ post.date | date: "%Y-%m-%d" }}</span> — [{{ post.title }}]({{ post.url }})
-{% endfor %}
+  <h1>Open Source Projects</h1>
+  <ul class="posts">
+    {% for project in site.data.projects %}
+      <li><a href="{{ project.url }}">{{ project.name }}</a> — {{ project.description }}</li>
+    {% endfor %}
+  </ul>
+</div>
