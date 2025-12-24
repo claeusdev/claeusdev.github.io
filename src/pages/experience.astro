@@ -1,0 +1,64 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { EXPERIENCE } from "../consts";
+---
+
+<BaseLayout title="Experience">
+  <h1>Experience</h1>
+
+  {
+    EXPERIENCE.map((job) => (
+      <div class="job">
+        <h3>
+          {job.role} @ {job.company}
+        </h3>
+        <span class="meta">
+          {job.duration} | {job.location}
+        </span>
+        <ul>
+          {job.details.map((detail) => (
+            <li
+              set:html={detail.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")}
+            />
+          ))}
+        </ul>
+      </div>
+    ))
+  }
+
+  <h2>Skills</h2>
+  <ul>
+    <li>
+      <strong>Languages</strong>: TypeScript, Go, Ruby, Python, C/C++, Rust,
+      OCaml, SQL, Haskell
+    </li>
+    <li>
+      <strong>Frameworks & Tools</strong>: React/Redux, Rails, Tailwind CSS,
+      FastAPI, Sidekiq
+    </li>
+    <li>
+      <strong>Infrastructure</strong>: PostgreSQL, Redis, Docker, AWS, GCP,
+      Heroku, DigitalOcean
+    </li>
+  </ul>
+
+  <h2>Education</h2>
+  <p>
+    <strong>University of Leicester</strong> — Leicester, UK<br />
+    <em>Master of Science in Advanced Computer Science; Distinction</em>
+  </p>
+</BaseLayout>
+
+<style>
+  .job {
+    margin-bottom: 2em;
+  }
+  .job h3 {
+    font-size: 1.1em;
+    margin-bottom: 0.25em;
+  }
+  .job ul {
+    margin-left: 1.35em;
+    margin-top: 0.5em;
+  }
+</style>

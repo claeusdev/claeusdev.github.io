@@ -1,0 +1,84 @@
+---
+interface Props {
+  title: string;
+}
+
+import { SITE_TITLE, SITE_DESCRIPTION, AUTHOR, EMAIL, GITHUB_USERNAME, TWITTER_USERNAME } from '../consts';
+import '../styles/global.css';
+
+const { title } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title || SITE_TITLE}</title>
+    <meta name="author" content={AUTHOR} />
+    <meta name="description" content={SITE_DESCRIPTION} />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- RSS Feed -->
+    <link rel="alternate" type="application/rss+xml" title={SITE_TITLE} href="/rss.xml" />
+    
+    <!-- MathJax -->
+    <script is:inline type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [['$','$'], ['\\(','\\)']],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script
+      is:inline
+      type="text/javascript"
+      async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"
+    ></script>
+  </head>
+  <body>
+    <div class="site">
+      <div class="title">
+        <a href="/">{SITE_TITLE}</a>
+        <a class="extra" href="/">home</a>
+      </div>
+
+      <slot />
+
+      <div class="footer">
+        <div class="contact">
+          <p>
+            {AUTHOR}
+            <br />
+            {SITE_DESCRIPTION}
+            <br />
+            {EMAIL}
+            <br />
+            Theme modeled after <a href="https://tom.preston-werner.com/">Tom Preston-Werner</a>
+          </p>
+        </div>
+        <div class="contact">
+          <p>
+            <a href={`https://github.com/${GITHUB_USERNAME}`}>
+              github.com/{GITHUB_USERNAME}
+            </a>
+            <br />
+            <a href={`https://twitter.com/${TWITTER_USERNAME}`}>
+              twitter.com/{TWITTER_USERNAME}
+            </a>
+            <br />
+          </p>
+        </div>
+        <div class="rss">
+          <a href="/rss.xml">
+            <img src="/rss.svg" alt="Subscribe to RSS Feed" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
