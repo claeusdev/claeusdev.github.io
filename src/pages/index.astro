@@ -3,67 +3,120 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import { PROJECTS } from "../consts";
 
+// Get recent posts (latest 5)
 const posts = (await getCollection("blog"))
   .filter((post) => !post.data.draft)
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 5);
 
 function formatDate(date: Date): string {
   return date.toLocaleDateString("en-US", {
-    day: "2-digit",
-    month: "short",
     year: "numeric",
+    month: "short",
+    day: "numeric",
   });
 }
 ---
 
-<BaseLayout title="Home">
-  <h1>Bio</h1>
-  <p>
-    I'm a Software Engineer and Researcher. I hope to help build better software
-    for people to bring their ideas to life, and to help improve the experience
-    of our interactions with the BOTS (AI).
-  </p>
-  <p>
-    I am a generalist and care deeply about systems, that form the basis of our
-    applications; and how we use and live with computers that are all around us.
-    More than anything, I love to build things.
-  </p>
-  <p>
-    Previously, worked at <a href="https://rhino.com">Rhino</a>, <a
-      href="https://leafly.com">Leafly</a
-    >, <a href="https://andela.com">Andela</a>, <a
-      href="https://expresspaygh.com">Expresspay</a
-    >, <a href="https://housinganywhere.com">HousingAnywhere</a> & <a
-      href="https://petraonline.com">PetraTrust</a
-    >.
-  </p>
-  <p>
-    My other interests include: Theoretical Computer Science, Programming
-    Languages, reading and all kinds of sports.
-  </p>
+<BaseLayout>
+  <div class="container">
+    <!-- Hero Section -->
+    <section class="hero">
+      <h1 class="hero-title">Nana Adjei Manu</h1>
+      <p class="hero-subtitle">
+        Software Engineer and Researcher. I build systems, explore programming
+        languages, and write about what I learn along the way.
+      </p>
+      <div class="hero-links">
+        <a
+          href="https://github.com/naamanu"
+          class="hero-link"
+          target="_blank"
+          rel="noopener"
+        >
+          <span>→</span> GitHub
+        </a>
+        <a
+          href="https://twitter.com/nmanu__"
+          class="hero-link"
+          target="_blank"
+          rel="noopener"
+        >
+          <span>→</span> Twitter
+        </a>
+        <a href="mailto:n.k.a.manu06@gmail.com" class="hero-link">
+          <span>→</span> Email
+        </a>
+      </div>
+    </section>
 
-  <div id="home">
-    <h1>Blog Posts</h1>
-    <ul class="posts">
-      {
-        posts.map((post) => (
-          <li>
-            <span>{formatDate(post.data.date)}</span> &raquo;{" "}
-            <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
-          </li>
-        ))
-      }
-    </ul>
+    <!-- About Section -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">About</h2>
+      </div>
+      <p>
+        I'm a generalist who cares deeply about systems that form the basis of
+        our applications, and how we use and live with the computers all around
+        us. More than anything, I love to build things.
+      </p>
+      <p>
+        Previously at <a href="https://rhino.com">Rhino</a>, <a
+          href="https://leafly.com">Leafly</a
+        >, <a href="https://andela.com">Andela</a>, <a
+          href="https://housinganywhere.com">HousingAnywhere</a
+        >, and <a href="https://petraonline.com">PetraTrust</a>.
+      </p>
+      <p>
+        My interests include Theoretical Computer Science, Programming
+        Languages, reading, and all kinds of sports.
+      </p>
+    </section>
 
-    <h1>Open Source Projects</h1>
-    <ul class="posts">
-      {
-        PROJECTS.map((project) => (
-          <li>
-            <a href={project.url}>{project.name}</a> — {project.description}
-          </li>
-        ))
-      }
-    </ul>
+    <!-- Recent Writing Section -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Recent Writing</h2>
+        <a href="/blog" class="section-link">View all →</a>
+      </div>
+      <div class="post-list">
+        {
+          posts.map((post) => (
+            <article class="post-item">
+              <a href={`/blog/${post.slug}/`} class="post-link">
+                {post.data.title}
+              </a>
+              <time class="post-date" datetime={post.data.date.toISOString()}>
+                {formatDate(post.data.date)}
+              </time>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Projects</h2>
+      </div>
+      <div class="project-list">
+        {
+          PROJECTS.map((project) => (
+            <div class="project-item">
+              <a
+                href={project.url}
+                class="project-name"
+                target="_blank"
+                rel="noopener"
+              >
+                {project.name}
+              </a>
+              <p class="project-description">{project.description}</p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
   </div>
 </BaseLayout>

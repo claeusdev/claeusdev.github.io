@@ -1,0 +1,31 @@
+---
+import { GITHUB_USERNAME, TWITTER_USERNAME, EMAIL } from "../consts";
+---
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-links">
+      <a
+        href={`https://github.com/${GITHUB_USERNAME}`}
+        class="footer-link"
+        target="_blank"
+        rel="noopener"
+      >
+        GitHub
+      </a>
+      <a
+        href={`https://twitter.com/${TWITTER_USERNAME}`}
+        class="footer-link"
+        target="_blank"
+        rel="noopener"
+      >
+        Twitter
+      </a>
+      <a href={`mailto:${EMAIL}`} class="footer-link"> Email </a>
+      <a href="/rss.xml" class="footer-link"> RSS </a>
+    </div>
+    <p class="footer-text">
+      © {new Date().getFullYear()} Nana Adjei Manu
+    </p>
+  </div>
+</footer>

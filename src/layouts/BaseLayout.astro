@@ -1,84 +1,64 @@
 ---
 interface Props {
-  title: string;
+  title?: string;
+  description?: string;
 }
 
-import { SITE_TITLE, SITE_DESCRIPTION, AUTHOR, EMAIL, GITHUB_USERNAME, TWITTER_USERNAME } from '../consts';
-import '../styles/global.css';
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/global.css";
 
-const { title } = Astro.props;
+const { title, description } = Astro.props;
+const pageTitle = title ? `${title} — ${SITE_TITLE}` : SITE_TITLE;
+const pageDescription = description || SITE_DESCRIPTION;
 ---
 
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<!doctype html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title || SITE_TITLE}</title>
-    <meta name="author" content={AUTHOR} />
-    <meta name="description" content={SITE_DESCRIPTION} />
-    
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <meta name="author" content={SITE_TITLE} />
+
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
     <!-- RSS Feed -->
-    <link rel="alternate" type="application/rss+xml" title={SITE_TITLE} href="/rss.xml" />
-    
-    <!-- MathJax -->
-    <script is:inline type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [['$','$'], ['\\(','\\)']],
-          processEscapes: true
-        }
-      });
-    </script>
-    <script
-      is:inline
-      type="text/javascript"
-      async
-      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"
-    ></script>
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={SITE_TITLE}
+      href="/rss.xml"
+    />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
   </head>
   <body>
-    <div class="site">
-      <div class="title">
-        <a href="/">{SITE_TITLE}</a>
-        <a class="extra" href="/">home</a>
-      </div>
-
-      <slot />
-
-      <div class="footer">
-        <div class="contact">
-          <p>
-            {AUTHOR}
-            <br />
-            {SITE_DESCRIPTION}
-            <br />
-            {EMAIL}
-            <br />
-            Theme modeled after <a href="https://tom.preston-werner.com/">Tom Preston-Werner</a>
-          </p>
-        </div>
-        <div class="contact">
-          <p>
-            <a href={`https://github.com/${GITHUB_USERNAME}`}>
-              github.com/{GITHUB_USERNAME}
-            </a>
-            <br />
-            <a href={`https://twitter.com/${TWITTER_USERNAME}`}>
-              twitter.com/{TWITTER_USERNAME}
-            </a>
-            <br />
-          </p>
-        </div>
-        <div class="rss">
-          <a href="/rss.xml">
-            <img src="/rss.svg" alt="Subscribe to RSS Feed" />
-          </a>
-        </div>
-      </div>
+    <div class="page">
+      <Header />
+      <main>
+        <slot />
+      </main>
+      <Footer />
     </div>
   </body>
 </html>
