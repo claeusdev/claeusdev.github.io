@@ -1,0 +1,94 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { EXPERIENCE } from "../consts";
+---
+
+<BaseLayout
+  title="Experience"
+  description="Professional experience and skills."
+>
+  <div class="container">
+    <section class="hero" style="padding-bottom: var(--space-xl);">
+      <h1 class="hero-title">Experience</h1>
+      <p class="hero-subtitle">
+        My professional journey building software products across different
+        industries.
+      </p>
+    </section>
+
+    <!-- Work Experience -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Work</h2>
+      </div>
+      <div class="experience-list">
+        {
+          EXPERIENCE.map((job) => (
+            <div class="experience-item">
+              <div class="experience-header">
+                <h3 class="experience-role">
+                  {job.role}{" "}
+                  <span class="experience-company">@ {job.company}</span>
+                </h3>
+                <p class="experience-meta">
+                  {job.duration} · {job.location}
+                </p>
+              </div>
+              <ul class="experience-details">
+                {job.details.map((detail) => (
+                  <li
+                    set:html={detail.replace(
+                      /\*\*(.*?)\*\*/g,
+                      "<strong>$1</strong>"
+                    )}
+                  />
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Skills</h2>
+      </div>
+      <div class="skills-grid">
+        <div class="skills-category">
+          <h4>Languages</h4>
+          <p>TypeScript, Go, Ruby, Python, C/C++, Rust, OCaml, SQL, Haskell</p>
+        </div>
+        <div class="skills-category">
+          <h4>Frameworks & Tools</h4>
+          <p>React, Redux, Rails, Tailwind CSS, FastAPI, Sidekiq, GraphQL</p>
+        </div>
+        <div class="skills-category">
+          <h4>Infrastructure</h4>
+          <p>PostgreSQL, Redis, Docker, AWS, GCP, Heroku, DigitalOcean</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Education</h2>
+      </div>
+      <div
+        class="experience-item"
+        style="border-bottom: none; padding-bottom: 0;"
+      >
+        <div class="experience-header">
+          <h3 class="experience-role">
+            Master of Science in Advanced Computer Science
+          </h3>
+          <p class="experience-meta">
+            University of Leicester · Leicester, UK · Distinction
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

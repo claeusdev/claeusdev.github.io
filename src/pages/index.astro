@@ -1,0 +1,123 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import { PROJECTS } from "../consts";
+
+// Get recent posts (latest 5)
+const posts = (await getCollection("blog"))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 5);
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+}
+---
+
+<BaseLayout>
+  <div class="container">
+    <!-- Hero Section -->
+    <section class="hero">
+      <p class="hero-subtitle">
+        Software Engineer and Researcher. I build systems, explore programming
+        languages, and write about what I learn along the way.
+      </p>
+      <div class="hero-links">
+        <a
+          href="https://github.com/naamanu"
+          class="hero-link"
+          target="_blank"
+          rel="noopener"
+        >
+          <span>→</span> GitHub
+        </a>
+        <a
+          href="https://twitter.com/nmanu__"
+          class="hero-link"
+          target="_blank"
+          rel="noopener"
+        >
+          <span>→</span> Twitter
+        </a>
+        <a href="mailto:n.k.a.manu06@gmail.com" class="hero-link">
+          <span>→</span> Email
+        </a>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">About</h2>
+      </div>
+      <p>
+        I enjoy working across the stack—from frontend interfaces to backend
+        systems to the infrastructure that holds it all together. I'm drawn to
+        problems that require thinking about scale, reliability, and developer
+        experience.
+      </p>
+      <p>
+        Previously at <a href="https://rhino.com">Rhino</a>, <a
+          href="https://leafly.com">Leafly</a
+        >, <a href="https://andela.com">Andela</a>, <a
+          href="https://housinganywhere.com">HousingAnywhere</a
+        >, and <a href="https://petraonline.com">PetraTrust</a>.
+      </p>
+      <p>
+        Outside of work, I'm interested in functional programming, distributed
+        systems, and programming language theory. I also read a lot and play
+        sports whenever I can.
+      </p>
+    </section>
+
+    <!-- Recent Writing Section -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Recent Writing</h2>
+        <a href="/blog" class="section-link">View all →</a>
+      </div>
+      <div class="post-list">
+        {
+          posts.map((post) => (
+            <article class="post-item">
+              <a href={`/blog/${post.slug}/`} class="post-link">
+                {post.data.title}
+              </a>
+              <time class="post-date" datetime={post.data.date.toISOString()}>
+                {formatDate(post.data.date)}
+              </time>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Projects</h2>
+      </div>
+      <div class="project-list">
+        {
+          PROJECTS.map((project) => (
+            <div class="project-item">
+              <a
+                href={project.url}
+                class="project-name"
+                target="_blank"
+                rel="noopener"
+              >
+                {project.name}
+              </a>
+              <p class="project-description">{project.description}</p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+  </div>
+</BaseLayout>

@@ -1,0 +1,36 @@
+---
+import { SITE_TITLE } from "../consts";
+
+const currentPath = Astro.url.pathname;
+
+const navLinks = [
+  { href: "/", label: "Home" },
+  { href: "/blog", label: "Writing" },
+  { href: "/experience", label: "Experience" },
+];
+---
+
+<header class="header">
+  <div class="container header-inner">
+    <a href="/" class="logo">{SITE_TITLE}</a>
+    <nav class="nav">
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class:list={[
+              "nav-link",
+              {
+                active:
+                  currentPath === link.href ||
+                  (link.href !== "/" && currentPath.startsWith(link.href)),
+              },
+            ]}
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</header>

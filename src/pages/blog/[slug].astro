@@ -1,0 +1,62 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: post,
+  }));
+}
+
+type Props = CollectionEntry<"blog">;
+
+const post = Astro.props;
+const { Content } = await post.render();
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
+// Calculate reading time
+const words = post.body.split(/\s+/).length;
+const readingTime = Math.ceil(words / 200);
+---
+
+<BaseLayout title={post.data.title} description={post.data.description}>
+  <div class="container">
+    <article>
+      <header class="post-header">
+        <h1 class="post-title">{post.data.title}</h1>
+        <p class="post-meta">
+          <time datetime={post.data.date.toISOString()}>
+            {formatDate(post.data.date)}
+          </time>
+          <span> · </span>
+          <span>{readingTime} min read</span>
+        </p>
+      </header>
+
+      <div class="post-content">
+        <Content />
+      </div>
+    </article>
+
+    <hr />
+
+    <nav class="post-nav">
+      <a href="/blog" class="section-link">← Back to all posts</a>
+    </nav>
+  </div>
+</BaseLayout>
+
+<style>
+  .post-nav {
+    padding: var(--space-xl) 0;
+  }
+</style>
