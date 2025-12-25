@@ -4,14 +4,14 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import { AUTHOR } from "../../consts";
 
 export async function getStaticPaths() {
-  const posts = await getCollection("blog");
+  const posts = await getCollection("posts");
   return posts.map((post) => ({
     params: { slug: post.slug },
     props: post,
   }));
 }
 
-type Props = CollectionEntry<"blog">;
+type Props = CollectionEntry<"posts">;
 
 const post = Astro.props;
 const { Content } = await post.render();
@@ -70,7 +70,7 @@ const tags = post.data.tags || [];
     <hr />
 
     <nav class="post-nav">
-      <a href="/blog" class="section-link">← Back to all posts</a>
+      <a href="/posts" class="section-link">← Back to all posts</a>
     </nav>
   </div>
 </BaseLayout>
