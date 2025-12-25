@@ -1,7 +1,16 @@
 ---
 title: "A Beginner's Guide to Functional Programming with OCaml"
+description: "Learn functional programming through OCaml, from lambda calculus foundations to practical programs. Covers immutability, pattern matching, recursion, and higher-order functions."
 date: 2025-01-15
+author: "Nana Adjei Manu"
 categories: "programming"
+tags:
+  [
+    "OCaml",
+    "Functional Programming",
+    "Lambda Calculus",
+    "Programming Languages",
+  ]
 ---
 
 Have you ever wondered what makes functional programming so different from the traditional programming you might be used to? Or perhaps you've heard about lambda calculus and wondered how it connects to actual programming languages?

@@ -15,11 +15,12 @@
   --color-accent-hover: #404040;
   --color-link: #171717;
   --color-link-hover: #525252;
-  
+
   /* Typography */
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
-  
+  --font-sans:
+    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", Consolas, monospace;
+
   /* Font Sizes - fluid typography */
   --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
   --text-sm: clamp(0.875rem, 0.8rem + 0.375vw, 1rem);
@@ -29,7 +30,7 @@
   --text-2xl: clamp(1.5rem, 1.25rem + 1.25vw, 2rem);
   --text-3xl: clamp(1.875rem, 1.5rem + 1.875vw, 2.5rem);
   --text-4xl: clamp(2.25rem, 1.75rem + 2.5vw, 3rem);
-  
+
   /* Spacing */
   --space-xs: 0.25rem;
   --space-sm: 0.5rem;
@@ -39,42 +40,30 @@
   --space-2xl: 3rem;
   --space-3xl: 4rem;
   --space-4xl: 6rem;
-  
+
   /* Layout */
   --max-width: 680px;
   --header-height: 64px;
-  
+
   /* Transitions */
   --transition-fast: 150ms ease;
   --transition-base: 250ms ease;
-  
+
   /* Border Radius */
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 12px;
 }
 
-/* Dark Mode */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-bg: #0a0a0a;
-    --color-bg-secondary: #171717;
-    --color-text: #fafafa;
-    --color-text-secondary: #a3a3a3;
-    --color-text-muted: #525252;
-    --color-border: #262626;
-    --color-accent: #fafafa;
-    --color-accent-hover: #d4d4d4;
-    --color-link: #fafafa;
-    --color-link-hover: #a3a3a3;
-  }
-}
+/* Light theme only - dark mode removed for consistent styling */
 
 /* ==========================================================================
    Base Styles
    ========================================================================== */
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -99,17 +88,37 @@ body {
    Typography
    ========================================================================== */
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: 600;
   line-height: 1.3;
   letter-spacing: -0.02em;
   color: var(--color-text);
 }
 
-h1 { font-size: var(--text-3xl); margin-bottom: var(--space-lg); }
-h2 { font-size: var(--text-2xl); margin-top: var(--space-2xl); margin-bottom: var(--space-md); }
-h3 { font-size: var(--text-xl); margin-top: var(--space-xl); margin-bottom: var(--space-sm); }
-h4 { font-size: var(--text-lg); margin-top: var(--space-lg); margin-bottom: var(--space-sm); }
+h1 {
+  font-size: var(--text-3xl);
+  margin-bottom: var(--space-lg);
+}
+h2 {
+  font-size: var(--text-2xl);
+  margin-top: var(--space-2xl);
+  margin-bottom: var(--space-md);
+}
+h3 {
+  font-size: var(--text-xl);
+  margin-top: var(--space-xl);
+  margin-bottom: var(--space-sm);
+}
+h4 {
+  font-size: var(--text-lg);
+  margin-top: var(--space-lg);
+  margin-bottom: var(--space-sm);
+}
 
 p {
   margin-bottom: var(--space-md);
@@ -128,12 +137,14 @@ a:hover {
   color: var(--color-link-hover);
 }
 
-strong, b {
+strong,
+b {
   font-weight: 600;
   color: var(--color-text);
 }
 
-em, i {
+em,
+i {
   font-style: italic;
 }
 
@@ -145,7 +156,8 @@ blockquote {
   font-style: italic;
 }
 
-ul, ol {
+ul,
+ol {
   margin: var(--space-md) 0;
   padding-left: var(--space-lg);
   color: var(--color-text-secondary);
@@ -572,16 +584,16 @@ main {
   .hero {
     padding: var(--space-2xl) 0;
   }
-  
+
   .hero-links {
     flex-direction: column;
     gap: var(--space-sm);
   }
-  
+
   .nav {
     gap: var(--space-md);
   }
-  
+
   .section-header {
     flex-direction: column;
     align-items: flex-start;

@@ -1,7 +1,16 @@
 ---
 title: "Operational Semantics: Adding Variables, Functions and Conditionals"
+description: "Extend a simple arithmetic language with variables, functions, and conditionals. Learn about environments, closures, and lexical scoping in operational semantics."
 date: 2025-02-14
+author: "Nana Adjei Manu"
 categories: "language-design"
+tags:
+  [
+    "Programming Languages",
+    "Semantics",
+    "Lambda Calculus",
+    "Functional Programming",
+  ]
 ---
 
 In our previous article, we explored operational semantics using a simple language of arithmetic expressions. While instructive, a language with only arithmetic operations is quite limited. In this article, we'll extend our language with three powerful features: variables, functions, and conditionals. These additions transform our simple calculator into a complete functional programming language.

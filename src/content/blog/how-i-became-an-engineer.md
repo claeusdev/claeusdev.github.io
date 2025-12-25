@@ -1,7 +1,10 @@
 ---
-title: How I became a Software Engineer/Programmer
+title: "How I became a Software Engineer/Programmer"
+description: "My journey from studying Medicine in China to becoming a self-taught software engineer. A personal story about discovering coding, making career changes, and lessons learned along the way."
 date: 2019-03-19
-categories: career
+author: "Nana Adjei Manu"
+categories: "career"
+tags: ["Career", "Self-Taught", "Software Engineering", "Personal Story"]
 ---
 
 I'm Nana, just turned 27 living in Accra, Ghana, I'm a Software Developer trying to hack things one way or the other. I didn't write code till I was 22. I used to spend my free time with my friends in a very small Chinese pizza shop in the very nice beach city of Dalian, China (Y'all should find the time and visit the place, its unbelievable). Oh and my writing skills have never been a thing, pardon my mistakes and poor writing skills, I suck at telling stories. I actually intend to get better by writing more.

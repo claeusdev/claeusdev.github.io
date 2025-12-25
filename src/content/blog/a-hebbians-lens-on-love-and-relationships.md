@@ -1,7 +1,10 @@
 ---
 title: "Strengthening Connections: A Hebbians Lens on Love and Relationships"
+description: "Explore how the neuroscience principle 'neurons that fire together, wire together' offers insights into romantic relationships and emotional bonds."
 date: 2025-02-06
+author: "Nana Adjei Manu"
 categories: "random-thoughts"
+tags: ["Neuroscience", "Relationships", "Psychology", "Love"]
 ---
 
 The adage "neurons that fire together, wire together" captures the essence of Hebbian learning, a neuroscience principle where repeated coactivation strengthens synaptic connections. While not a perfect analogy, this concept offers a compelling framework for understanding romantic relationships. Just as neurons build robust networks through correlated activity, partners deepen their bond through shared emotional, physical, and experiential "coactivation." Yet, unlike neurons, human connections require conscious effort to reinforce positive patterns and prune negative ones.

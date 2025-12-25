@@ -1,7 +1,10 @@
 ---
 title: "Filtering Sensitive Data in Ruby on Rails with ActiveSupport::ParameterFilter"
+description: "Learn how to protect sensitive data in Rails applications using ActiveSupport::ParameterFilter. Covers filtering passwords, API keys, and custom patterns from logs."
 date: 2023-08-20
+author: "Nana Adjei Manu"
 categories: "rails"
+tags: ["Ruby on Rails", "Security", "Web Development", "Backend"]
 ---
 
 When developing Rails applications, it's common to log requests and responses to diagnose issues or monitor the application. However, some data, like passwords or API keys, is sensitive and should never be exposed in logs. Thankfully, Rails provides `ActiveSupport::ParameterFilter` to help!

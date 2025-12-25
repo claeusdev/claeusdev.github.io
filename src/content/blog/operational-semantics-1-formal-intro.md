@@ -1,7 +1,10 @@
 ---
 title: "Operational Semantics: A Formal Approach to Arithmetic Expressions"
+description: "An introduction to operational semantics for programming languages. Learn small-step and big-step semantics through a simple arithmetic expression language."
 date: 2025-02-13
+author: "Nana Adjei Manu"
 categories: "language-design"
+tags: ["Programming Languages", "Semantics", "Compilers", "Type Theory"]
 ---
 
 Programming languages are precise, formal systems, yet we typically understand them through informal descriptions and examples. While this works for everyday programming, it falls short when designing languages, building compilers, or proving program correctness. This is where formal semantics comes in—particularly operational semantics, which provides a framework for describing how programs execute.

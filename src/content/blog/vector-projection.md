@@ -1,7 +1,10 @@
 ---
 title: "Unveiling the Shadow Play: Simplifying Complex Data with Vector Projection"
+description: "Learn how vector projection and dimensionality reduction techniques like PCA help simplify high-dimensional data for visualization and machine learning."
 date: 2025-09-11
+author: "Nana Adjei Manu"
 categories: "data-science"
+tags: ["Data Science", "Machine Learning", "PCA", "Linear Algebra"]
 ---
 
 Imagine trying to understand a big, ultra-modern city from a satellite view (think of the view when your plane is descending to land). You see all the buildings, roads, and other intricate details. You will agree with me that, it's a lot to take in. Now let's imagine looking at a simplified map of that same city, highlighting only the main highways and landmarks, thus, a lot of the intricate details removed or supressed.

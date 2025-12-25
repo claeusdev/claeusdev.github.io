@@ -1,7 +1,10 @@
 ---
 title: "Algorithms: What are they?"
+description: "An introduction to algorithms in computer science. Learn what computational problems are, the difference between decision and optimization problems, and why algorithm design matters."
 date: 2024-02-24
+author: "Nana Adjei Manu"
 categories: "algorithms"
+tags: ["Algorithms", "Computer Science", "Programming", "Data Structures"]
 ---
 
 ### What are Algorithms?

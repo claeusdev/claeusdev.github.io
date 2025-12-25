@@ -1,6 +1,7 @@
 ---
 import { type CollectionEntry, getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { AUTHOR } from "../../consts";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -26,20 +27,39 @@ function formatDate(date: Date): string {
 // Calculate reading time
 const words = post.body.split(/\s+/).length;
 const readingTime = Math.ceil(words / 200);
+
+// Get author and tags
+const author = post.data.author || AUTHOR;
+const tags = post.data.tags || [];
 ---
 
-<BaseLayout title={post.data.title} description={post.data.description}>
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  image={post.data.image}
+>
   <div class="container">
     <article>
       <header class="post-header">
         <h1 class="post-title">{post.data.title}</h1>
         <p class="post-meta">
+          <span class="post-author">By {author}</span>
+          <span> · </span>
           <time datetime={post.data.date.toISOString()}>
             {formatDate(post.data.date)}
           </time>
           <span> · </span>
           <span>{readingTime} min read</span>
         </p>
+        {
+          tags.length > 0 && (
+            <div class="post-tags">
+              {tags.map((tag: string) => (
+                <span class="tag">{tag}</span>
+              ))}
+            </div>
+          )
+        }
       </header>
 
       <div class="post-content">
@@ -54,6 +74,34 @@ const readingTime = Math.ceil(words / 200);
     </nav>
   </div>
 </BaseLayout>
+
+<style>
+  .post-nav {
+    padding: var(--space-xl) 0;
+  }
+
+  .post-author {
+    font-weight: 500;
+    color: var(--color-text);
+  }
+
+  .post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+  }
+
+  .tag {
+    font-size: var(--text-xs);
+    font-family: var(--font-mono);
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-secondary);
+  }
+</style>
 
 <style>
   .post-nav {
