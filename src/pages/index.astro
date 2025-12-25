@@ -114,6 +114,13 @@ function formatDate(date: Date): string {
                 {project.name}
               </a>
               <p class="project-description">{project.description}</p>
+              {project.tags && (
+                <div class="project-tags">
+                  {project.tags.map((tag) => (
+                    <span class="tag">{tag}</span>
+                  ))}
+                </div>
+              )}
             </div>
           ))
         }
@@ -121,3 +128,23 @@ function formatDate(date: Date): string {
     </section>
   </div>
 </BaseLayout>
+
+<style>
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    margin-top: var(--space-xs);
+  }
+
+  .tag {
+    font-size: var(--text-xs);
+    font-family: var(--font-mono);
+    color: var(--color-text-muted);
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+  }
+</style>
+```
