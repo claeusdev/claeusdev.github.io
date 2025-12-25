@@ -34,6 +34,39 @@ export const PROJECTS = [
     url: "https://github.com/claeusdev/pricc",
     tags: ["Rust", "C", "Tooling"],
   },
+  {
+    name: "rcv",
+    description:
+      "A simple resume generator written in Rust that converts declarative .rcv files into beautiful PDFs.",
+    url: "https://github.com/naamanu/rcv",
+    tags: ["Rust", "PDF", "CLI"],
+  },
+  {
+    name: "cathtml",
+    description:
+      "A type-safe, composable DSL for building HTML pages in OCaml.",
+    url: "https://github.com/naamanu/cathtml",
+    tags: ["OCaml", "DSL", "HTML"],
+  },
+  {
+    name: "gurl",
+    description:
+      "A simple, colorful CLI wrapper around curl for easier terminal usage.",
+    url: "https://github.com/naamanu/gurl",
+    tags: ["Rust", "CLI", "Tooling"],
+  },
+  {
+    name: "raptur",
+    description: "Simple express inspired router",
+    url: "https://github.com/naamanu/raptur",
+    tags: ["TypeScript", "Router", "Backend"],
+  },
+  {
+    name: "cashapp",
+    description: "Peer-to-peer payments service",
+    url: "https://github.com/naamanu/cashapp",
+    tags: ["Go", "Payments", "System"],
+  },
 ];
 
 export const EXPERIENCE = [
