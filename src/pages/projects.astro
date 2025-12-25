@@ -1,0 +1,57 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { PROJECTS } from "../consts";
+---
+
+<BaseLayout title="Projects">
+  <div class="container">
+    <section class="section">
+      <div class="section-header">
+        <h1 class="section-title">Projects</h1>
+      </div>
+      <div class="project-list">
+        {
+          PROJECTS.map((project) => (
+            <div class="project-item">
+              <a
+                href={project.url}
+                class="project-name"
+                target="_blank"
+                rel="noopener"
+              >
+                {project.name}
+              </a>
+              <p class="project-description">{project.description}</p>
+              {project.tags && (
+                <div class="project-tags">
+                  {project.tags.map((tag) => (
+                    <span class="tag">{tag}</span>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))
+        }
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    margin-top: var(--space-xs);
+  }
+
+  .tag {
+    font-size: var(--text-xs);
+    font-family: var(--font-mono);
+    color: var(--color-text-muted);
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+  }
+</style>

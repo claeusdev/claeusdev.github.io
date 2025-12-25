@@ -100,10 +100,11 @@ function formatDate(date: Date): string {
     <section class="section">
       <div class="section-header">
         <h2 class="section-title">Projects</h2>
+        <a href="/projects" class="section-link">View all →</a>
       </div>
       <div class="project-list">
         {
-          PROJECTS.map((project) => (
+          PROJECTS.slice(0, 5).map((project) => (
             <div class="project-item">
               <a
                 href={project.url}
