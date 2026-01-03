@@ -1,0 +1,128 @@
+---
+interface Props {
+  slug: string;
+}
+
+const { slug } = Astro.props;
+---
+
+<span class="view-counter" data-slug={slug}>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="14"
+    height="14"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    class="view-icon"
+  >
+    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+    <circle cx="12" cy="12" r="3"></circle>
+  </svg>
+  <span class="view-count">—</span>
+  <span class="view-label">views</span>
+</span>
+
+<style>
+  .view-counter {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: var(--text-sm, 0.875rem);
+    color: var(--color-text-secondary, #666);
+  }
+
+  .view-icon {
+    opacity: 0.7;
+  }
+
+  .view-count {
+    font-family: var(--font-mono, monospace);
+    font-weight: 500;
+  }
+
+  .view-label {
+    opacity: 0.8;
+  }
+</style>
+
+<script>
+  // Client-side script to increment and display view count
+  const SUPABASE_URL = import.meta.env.PUBLIC_SUPABASE_URL || "";
+  const SUPABASE_ANON_KEY = import.meta.env.PUBLIC_SUPABASE_ANON_KEY || "";
+
+  async function trackView(slug: string): Promise<number> {
+    if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+      console.warn("Supabase not configured");
+      return 0;
+    }
+
+    try {
+      const response = await fetch(
+        `${SUPABASE_URL}/rest/v1/rpc/increment_views`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            apikey: SUPABASE_ANON_KEY,
+            Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+          },
+          body: JSON.stringify({ page_slug: slug }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
+      const views = await response.json();
+      return typeof views === "number" ? views : 0;
+    } catch (error) {
+      console.error("Error tracking view:", error);
+      return 0;
+    }
+  }
+
+  // Initialize all view counters on the page
+  document.querySelectorAll(".view-counter").forEach(async (counter) => {
+    const slug = counter.getAttribute("data-slug");
+    if (!slug) return;
+
+    const countElement = counter.querySelector(".view-count");
+    if (!countElement) return;
+
+    // Only track view once per session per post
+    const sessionKey = `viewed_${slug}`;
+    let views = 0;
+
+    if (!sessionStorage.getItem(sessionKey)) {
+      views = await trackView(slug);
+      sessionStorage.setItem(sessionKey, "true");
+    } else {
+      // Just fetch current count without incrementing
+      try {
+        const response = await fetch(
+          `${SUPABASE_URL}/rest/v1/page_views?slug=eq.${encodeURIComponent(slug)}&select=views`,
+          {
+            headers: {
+              apikey: SUPABASE_ANON_KEY,
+              Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+            },
+          }
+        );
+        const data = await response.json();
+        views = data[0]?.views || 0;
+      } catch (error) {
+        console.error("Error fetching views:", error);
+      }
+    }
+
+    // Update the display
+    if (views > 0) {
+      countElement.textContent = views.toLocaleString();
+    }
+  });
+</script>

@@ -71,7 +71,7 @@ export const PROJECTS = [
 
 export const EXPERIENCE = [
   {
-    company: "Ravka",
+    company: "Ravka Consult",
     role: "Senior Product Engineer",
     location: "Rotterdam, NL",
     duration: "Jan 2024 -- Jul 2025",
