@@ -10,31 +10,70 @@ tags: ["Astro", "Supabase", "Static Sites", "Tutorial"]
 
 ![Building a View Counter with Supabase](/view-counter-supabase.png)
 
-I recently rebuilt this website from scratch. The old version was a Jekyll template I'd been using for years — functional, but not really _mine_. The new one is a custom Astro build, designed exactly how I want it.
+Static sites can't count views. That's the whole point — they're static.
 
-One of my goals for this new year is simple: **measure everything**. I want to understand how every effort I put into something yields results. If I'm going to spend hours writing a blog post, I want to know if anyone actually reads it. If I'm going to build a side project, I want to see if it resonates.
+When you visit this page, you're downloading a pre-built HTML file from GitHub Pages. There's no server running Node.js or Python. There's no database. It's just HTML, CSS, and JavaScript sitting in a CDN, served instantly to anyone who asks.
 
-So the first feature I added to the new site? A view counter.
+But I wanted to know if anyone actually reads what I write. I wanted a simple number next to each post: **42 views**, **128 views**, whatever. A view counter.
 
-Nothing fancy — just a number next to each post showing how many people have read it. But there's a problem: this is a static site. There's no server. When you visit this page, you're just downloading pre-built HTML files from GitHub Pages. There's nowhere to store a count.
+The problem? Counters need to remember things. Static sites can't remember anything.
 
-## The Problem with Static Sites
+So how do you add dynamic behavior to something that's fundamentally static? That's the interesting challenge.
 
-When someone visits a blog post, here's what happens:
+## The Challenge
+
+Here's what happens when someone visits a blog post on a static site:
 
 ```
-Browser requests page
+Browser requests /posts/some-article
     ↓
-GitHub Pages serves static HTML
+CDN/GitHub Pages serves static HTML
     ↓
-???
+Browser renders the page
+    ↓
+Done. No server involved.
 ```
 
-Where do we store the view count? We can't write to a JSON file — the browser can _read_ files but can't _write_ to them. We need somewhere to persist data.
+Where would we store the view count? A few options I considered:
 
-## Why Supabase?
+**Write to a JSON file?** Browsers can read files, but they can't write back to the server. No file access.
 
-I considered a few options:
+**LocalStorage/cookies?** These are client-side only. They track what _you've_ seen, not what _everyone's_ seen. If I store "42 views" in your browser, that number is meaningless — it's not the real count.
+
+**Embed it at build time?** The site builds once and deploys. Until the next build, the count is frozen. Not useful.
+
+**Use a third-party API?** Now we're talking. We need something that can:
+
+- Accept requests from browsers
+- Persist data across visits
+- Increment a counter atomically (no race conditions)
+- Ideally be free
+
+This is where Supabase comes in.
+
+## The Solution: Architecture Overview
+
+Here's the flow I built:
+
+```
+User visits blog post
+    ↓
+Browser runs client-side JavaScript
+    ↓
+JavaScript calls Supabase REST API
+    ↓
+Supabase increments counter in PostgreSQL
+    ↓
+Returns new count to browser
+    ↓
+Browser displays: "42 views"
+```
+
+The key insight: **Supabase gives you a PostgreSQL database with a REST API**. You don't need to write backend code. You just call their API directly from the browser, and it handles the database operations.
+
+### Why Supabase?
+
+I looked at a few options:
 
 | Option           | Pros                     | Cons                       |
 | ---------------- | ------------------------ | -------------------------- |
@@ -43,16 +82,18 @@ I considered a few options:
 | Firebase         | Google-backed            | More complex than needed   |
 | **Supabase**     | Free, simple, PostgreSQL | Have to set up a project   |
 
-I went with Supabase because:
+Supabase won because:
 
-1. **Free tier is generous** — 500MB database, 50k monthly active users
-2. **It's just PostgreSQL** — I can write real SQL
-3. **REST API out of the box** — No backend code needed
-4. **Row-level security** — I can lock down access properly
+1. **Free tier is generous**: 500MB database, 50k monthly active users
+2. **It's just PostgreSQL**: I can write real SQL, use transactions, create functions
+3. **REST API out of the box**: No backend code needed
+4. **Row-level security**: Proper access control built-in
 
-## The Database Schema
+## Building It: Three Parts
 
-First, I created a simple table to track views:
+### Part 1: The Database Layer
+
+First, I needed a table to track views. Simple enough:
 
 ```sql
 CREATE TABLE page_views (
@@ -64,11 +105,20 @@ CREATE TABLE page_views (
 );
 ```
 
-Each blog post has a `slug` (like `building-view-counter-supabase-astro`). When someone visits, we increment the `views` column.
+Each blog post has a unique `slug` (like `building-view-counter-supabase-astro`). When someone visits, we increment the `views` column for that slug.
 
-### The Increment Function
+But here's the problem: if we do a normal read-then-write, we have a race condition:
 
-Instead of doing a read-then-write (which has race conditions), I created a PostgreSQL function that atomically increments and returns the new count:
+```
+User A reads: views = 42
+User B reads: views = 42
+User A writes: views = 43
+User B writes: views = 43  ← Should be 44!
+```
+
+We need an **atomic operation**, one that reads and increments in a single, uninterruptible step.
+
+PostgreSQL has a solution: **functions**. I wrote a function that does an "upsert" (insert or update):
 
 ```sql
 CREATE OR REPLACE FUNCTION increment_views(page_slug TEXT)
@@ -87,11 +137,17 @@ END;
 $$ LANGUAGE plpgsql;
 ```
 
-This is an **upsert** — if the slug doesn't exist, it inserts with views = 1. If it does exist, it increments. Either way, it returns the new count.
+What this does:
 
-## The Astro Component
+- If the slug doesn't exist → insert with `views = 1`
+- If the slug exists → increment `views` by 1
+- Either way → return the new count
 
-Here's the view counter component I built:
+This is atomic. No race conditions. The database handles concurrency for us.
+
+### Part 2: The Client Component
+
+Now I needed an Astro component that calls this function from the browser. Here's what I built:
 
 ```astro
 ---
@@ -170,15 +226,90 @@ const { slug } = Astro.props;
 </script>
 ```
 
-A few things to note:
+A few things worth noting:
 
-1. **Session storage prevents inflation** — We only count once per browser session. Refreshing the page doesn't increment.
-2. **Client-side execution** — This runs in the browser, so we don't need SSR.
-3. **Graceful degradation** — If Supabase is down, the counter just shows `—`.
+**Session storage prevents inflation.** I use `sessionStorage` to track whether you've already viewed this post in the current browser session. If you have, we just fetch the count without incrementing. This prevents you from inflating the number by refreshing the page repeatedly.
 
-## Using the Component
+**Client-side execution.** This entire script runs in the browser. Astro builds the HTML with `<span class="view-count">—</span>`, and then JavaScript fills in the real number after the page loads. This means:
 
-In my blog post template (`[slug].astro`), I added the counter to the post meta:
+- The page loads fast (no waiting for database)
+- It works with static site generation
+- If Supabase is down, you just see "—" instead of breaking
+
+**Direct API calls.** Notice we're calling Supabase directly from the browser. The `/rest/v1/rpc/increment_views` endpoint executes our PostgreSQL function. The `/rest/v1/page_views?slug=eq.${slug}` endpoint queries the table. No backend server required.
+
+### Part 3: Making It Production-Ready
+
+For this to work in production, I needed three things:
+
+#### 1. Environment Variables
+
+In local development, I created a `.env` file:
+
+```bash
+PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+```
+
+The `PUBLIC_` prefix in Astro exposes these to client-side code. This is fine — the "anon key" is meant to be public. It's like an API key that anyone can see, but row-level security (next step) controls what it can do.
+
+#### 2. GitHub Actions Deployment
+
+Since I deploy via GitHub Actions, I added the environment variables to the build step:
+
+```yaml
+- name: Build with Astro
+  run: npm run build
+  env:
+    PUBLIC_SUPABASE_URL: ${{ secrets.PUBLIC_SUPABASE_URL }}
+    PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.PUBLIC_SUPABASE_ANON_KEY }}
+```
+
+Then I added the secrets in GitHub: **Settings → Secrets and variables → Actions → New repository secret**.
+
+#### 3. Row-Level Security (Critical!)
+
+By default, Supabase tables are completely locked down. The anon key can't do anything. We need to explicitly allow:
+
+- Reading view counts
+- Incrementing view counts
+
+Here's the security policy I created:
+
+```sql
+-- Enable row-level security on the table
+ALTER TABLE page_views ENABLE ROW LEVEL SECURITY;
+
+-- Allow anyone to read view counts
+CREATE POLICY "Allow public read access"
+  ON page_views
+  FOR SELECT
+  USING (true);
+
+-- Allow anyone to insert new rows (for new slugs)
+CREATE POLICY "Allow public insert"
+  ON page_views
+  FOR INSERT
+  WITH CHECK (true);
+
+-- Allow anyone to update existing rows (for incrementing)
+CREATE POLICY "Allow public update"
+  ON page_views
+  FOR UPDATE
+  USING (true);
+```
+
+This says: "Anyone with the anon key can read, insert, and update the `page_views` table." That sounds permissive, but remember:
+
+- The only operation exposed is `increment_views()`
+- We're not exposing user data — just public view counts
+- There's no way to decrement or delete counts (we didn't create those policies)
+
+If I were tracking private data, I'd lock this down further. But for a public view counter? This is fine.
+
+## The Result
+
+Now every blog post shows a live view count. In my post template (`[slug].astro`), I added:
 
 ```astro
 <p class="post-meta">
@@ -194,80 +325,27 @@ In my blog post template (`[slug].astro`), I added the counter to the post meta:
 </p>
 ```
 
-## Environment Variables
-
-For local development, I created a `.env` file:
-
-```bash
-PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-```
-
-The `PUBLIC_` prefix in Astro exposes these to client-side code (which is fine — the anon key is meant to be public).
-
-## GitHub Actions Deployment
-
-For production, I added the secrets to my GitHub Actions workflow:
-
-```yaml
-- name: Build with Astro
-  run: npm run build
-  env:
-    PUBLIC_SUPABASE_URL: ${{ secrets.PUBLIC_SUPABASE_URL }}
-    PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.PUBLIC_SUPABASE_ANON_KEY }}
-```
-
-Then I added the secrets in GitHub: **Settings → Secrets and variables → Actions → New repository secret**.
-
-## Row-Level Security (Important!)
-
-By default, Supabase tables are private. We need to allow the anon key to:
-
-1. Read the `page_views` table
-2. Execute the `increment_views` function
-
-In the Supabase SQL Editor:
-
-```sql
--- Enable RLS on the table
-ALTER TABLE page_views ENABLE ROW LEVEL SECURITY;
-
--- Allow anyone to read view counts
-CREATE POLICY "Allow public read access"
-  ON page_views
-  FOR SELECT
-  USING (true);
-
--- Allow the function to insert/update
--- (Functions run with invoker rights, so we need this)
-CREATE POLICY "Allow public insert"
-  ON page_views
-  FOR INSERT
-  WITH CHECK (true);
-
-CREATE POLICY "Allow public update"
-  ON page_views
-  FOR UPDATE
-  USING (true);
-```
-
-## The Result
-
-Now every blog post shows a view count:
+And it renders like this:
 
 > By Nana Adjei Manu · January 3, 2026 · 5 min read · 👁 **42 views**
 
-It's simple, privacy-friendly (no cookies, no tracking), and completely free.
+It's simple, privacy-friendly (no cookies, no third-party tracking), and completely free on Supabase's tier.
 
-## What I'd Do Differently
+More importantly, I now have data. I can see which posts resonate, which don't, and whether the effort I put into writing is actually reaching people. That's the goal: **measure everything**.
 
-If I were building this again:
+## Reflections: What I'd Do Differently
 
-1. **Add a loading state** — Right now it shows `—` until the count loads
-2. **Cache on the edge** — Use Supabase Edge Functions for lower latency
-3. **Add unique visitor tracking** — Maybe fingerprint-based, but that gets into privacy weirdness
+If I were building this again, here's what I'd change:
 
-But for a simple blog? This is enough.
+1. **Add a loading state**: Right now it shows `—` until the count loads. A subtle skeleton loader would be better UX.
+
+2. **Cache on the edge**: Use Supabase Edge Functions to cache counts at the CDN level for lower latency. Right now every page view hits the database.
+
+3. **Add unique visitor tracking**: This counts sessions, not unique people. I could fingerprint browsers, but that gets into privacy concerns. Maybe a hash of IP + User-Agent? Still feels invasive.
+
+4. **Debounce the increment** — If someone navigates away quickly (< 5 seconds), should that count as a view? Probably not. A small delay would filter out accidental clicks.
+
+But honestly? For a simple blog, this is enough. It does exactly what I need, costs nothing, and took about an hour to build.
 
 ---
 

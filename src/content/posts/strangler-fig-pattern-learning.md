@@ -18,35 +18,64 @@ This is high-risk, expensive, and stressful. It's the equivalent of leaving a lo
 
 There is a better way. Just like software architects use the **Strangler Fig Pattern** to modernize legacy systems, you can use it to modernize _yourself_.
 
-## My Own Strangler Fig Story
+## What Is a Strangler Fig?
 
-I didn't quit my day job to become a programming languages researcher overnight. That would have been insane.
+In nature, a strangler fig starts as a tiny seed dropped by a bird in the canopy of a host tree. The seed germinates high above the ground, sending roots down the trunk to reach the soil below. Over decades, these roots thicken and multiply, gradually wrapping around the host tree.
 
-Instead, I started planting seeds while my "legacy system" (Typescript, React, Go) kept paying the bills.
+Eventually, the fig's roots fuse together, forming a lattice that stands on its own. The original host tree, now completely enveloped, dies and decomposes, leaving behind a hollow, self-supporting strangler fig tree.
 
-It started with a YouTube video. I stumbled on a talk by Yaron Minsky about compilers and how Jane Street uses OCaml. Something clicked. I didn't just want to _use_ tools—I wanted to understand how they were built. I wanted to work at a place like Jane Street someday.
+The key insight: **the strangler fig doesn't kill its host immediately**. It relies on the host for support while it builds its own structure. Only when it's strong enough to stand alone does the transition complete.
 
-The problem? I was a product engineer—comfortable with React, Ruby, Go, distributed systems—but I had zero formal CS background in compilers or type theory. That world felt impossibly far away.
+## The Pattern in Software
+
+In 2004, Martin Fowler named a software architecture pattern after this natural phenomenon. The **Strangler Fig Pattern** is how you modernize a legacy system without the risk of a complete rewrite:
+
+1. **Identify a small piece** of functionality in the old system
+2. **Build a new version** of that piece with modern technology
+3. **Route traffic** from the old system to the new one for that specific feature
+4. **Repeat** until the new system handles everything and the old one can be retired
+
+Instead of shutting down the entire monolith to build microservices (high risk, often fails), you gradually wrap new services around it. The old system keeps working while the new one grows.
+
+## The Pattern in Your Life
+
+The same principle applies to career transitions and skill development. You don't need to quit your job, burn your bridges, or start from zero. You build the new skills _alongside_ the old ones, routing increasingly complex work to your new capabilities until they're strong enough to support you completely.
+
+## Why This Beats the "Big Bang"
+
+Before I share my story, here's why this approach works:
+
+1. **Lower Risk:** You don't lose your income while you learn. When your first attempts are buggy or imperfect, it doesn't matter, you still have your day job providing stability.
+
+2. **Real Feedback:** You aren't learning in a vacuum with toy exercises. You're building actual tools and solving real problems, which teaches you what actually matters versus what's just theoretical.
+
+3. **Compound Growth:** Each small project builds on the last. One skill makes the next easier to learn, creating a flywheel effect that accelerates your progress over time.
+
+4. **Less Burnout:** You aren't trying to change your entire identity overnight. The variety of old and new work keeps you energized instead of exhausted.
+
+## How I Applied It: Four Phases
+
+I didn't quit my day job to become a programming languages researcher overnight. That would have been insane. Instead, I started planting seeds while my "legacy system" (TypeScript, React, Go) kept paying the bills.
+
+### Phase 1: Plant the First Seed
+
+It started with a YouTube video. I stumbled on a talk by Yaron Minsky about compilers and how Jane Street uses OCaml. Something clicked. I didn't just want to _use_ tools, I wanted to understand how they were built. I wanted to work at a place like Jane Street someday.
+
+The problem? I was a product engineer, comfortable with React, Ruby, Go, distributed systems, but I didn't have a deep CS background in compilers or type theory. That world felt impossibly far away.
 
 So I did something unconventional: I enrolled in a master's program (a lot more on this later) and chose programming language theory as my thesis topic. Not because I was already an expert—but because I wanted to become one. The thesis became my forcing function.
 
 That curiosity became the first seed.
 
-## Step 1: Identify the "Microservice"
+When I wanted to explore programming language theory, I didn't immediately try to implement a full compiler with type inference and optimizations. I picked one tiny, isolated component: **build a simple Lisp interpreter**.
 
-Don't try to learn _everything_ at once. When I wanted to explore programming language theory, I didn't immediately try to implement a full compiler with type inference and optimizations.
+Why Lisp? Because the syntax is trivial, you can focus purely on evaluation semantics. I called it Swirl, and it started as just 200 lines of Rust that could evaluate `(+ 1 2)`.
 
-I picked one tiny, isolated component: **build a simple Lisp interpreter**.
+That was my first seed in the ground.
 
-Why Lisp? Because the syntax is trivial—you can focus purely on evaluation semantics. I called it Swirl, and it started as just 200 lines of Rust that could evaluate `(+ 1 2)`.
+### Phase 2: Route Real Work to New Skills
 
-That was my first microservice.
-
-## Step 2: Route the Traffic (The Magic Step)
-
-In software, we use a "router" to send specific requests to the new system while the old system handles the rest.
-
-In your life, **you** are the router.
+This is the magic step. In software, we use a "router" to send specific requests to the new system while the old system handles the rest. In your life, **you** are the router.
 
 I was still doing "boring" product engineering work full-time, but I started routing small tasks through my new skills:
 
@@ -56,53 +85,41 @@ I was still doing "boring" product engineering work full-time, but I started rou
 
 Each project was _real work_ that I would have done anyway. I just routed it through the skills I wanted to develop.
 
-I was technically a "systems programmer" for an hour a day. The rest of the day, my product engineering skills kept the system running.
+I was technically a "systems programmer" for a few hours a day. The rest of the day, my product engineering skills kept the system running.
 
-## Step 3: Expand the Root System
+### Phase 3: Deepen the Roots
 
-Once that first tiny skill is stable, pick another.
-
-After the Lisp interpreter worked, I added:
+Once that first tiny skill is stable, pick another. After the Lisp interpreter worked, I added:
 
 - **A REPL** that runs in the terminal
 - **A web playground** compiled to WebAssembly
 - **Proper error messages** with source locations
 
-But the real expansion came from my thesis. I built [L-Language](https://github.com/naamanu/l-lang)—a minimal functional language in Haskell with a React visualizer for understanding evaluation semantics. To support it, I wrote blog posts on [operational semantics](/posts/operational-semantics-1-formal-intro) to teach myself by teaching others.
+But the real expansion came from my thesis. I built [L-Language](https://github.com/naamanu/l-lang)—a minimal functional language in Haskell with a React visualizer for understanding operational semantics. To support it, I wrote blog posts on [operational semantics](/posts/operational-semantics-1-formal-intro) to teach myself by teaching others.
 
 The thesis forced me to go deeper than hobby projects ever would. I explored formal methods, type systems, and the theory behind distributed systems. Now I was a programming languages person for about 4-5 hours a day. Right after I shut down my work laptop, I'd get to the gym for about an hour (really important part), then get home and just read papers, watch videos, and write code.
 
-## Step 4: Strangle the Old Ways
+### Phase 4: The Natural Transition
 
-Over time, you keep building new "microservices" (skills) and routing more work to them.
-
-My GitHub started looking less like a product engineer's and more like a PLT researcher's. I was drafting proposals for ICFP (none that I actually had the confidence to submit—might be a good idea to do that this year). I was reading Plotkin and Pierce. I was building type systems.
+Over time, you keep building new capabilities and routing more work to them. My GitHub started looking less like a product engineer's and more like a PLT researcher's. I was drafting proposals for ICFP (none that I actually had the confidence to submit—might be a good idea to do that this year). I was reading Plotkin and Pierce. I was building type systems.
 
 Eventually, the new "system" became more valuable than the old one. The "legacy" product engineering career served its purpose—it supported me while the new me grew strong enough to stand on its own.
 
+The transition happened naturally, not because I forced it.
+
 ## The Practical Playbook
 
-Here's exactly what I did, distilled:
+Here's exactly how you can start your own strangler fig transformation:
 
 | Week  | Action                                              |
 | ----- | --------------------------------------------------- |
-| 1-4   | Read one PL paper per week on the train             |
-| 5-8   | Build a tiny Lisp interpreter (just `eval`)         |
-| 9-12  | Rebuild a work tool in the new language (Rust CLI)  |
+| 1-4   | Read one paper/article per week during commute      |
+| 5-8   | Build the smallest possible working example         |
+| 9-12  | Rebuild a real work tool using the new skill        |
 | 13-20 | Write about what you're learning (forces clarity)   |
 | 21+   | Start contributing to open source in the new domain |
 
 The key is that **at no point did I quit my job**. I just kept routing more traffic to the new skills until the switchover was natural.
-
-## Why This Beats the "Big Bang"
-
-1. **Lower Risk:** You don't lose your income while you learn. When my first Rust CLI tool was buggy, it didn't matter—I still had my day job salary.
-
-2. **Real Feedback:** You aren't learning in a vacuum. I wasn't doing toy exercises; I was building [actual tools](https://github.com/naamanu) I used daily.
-
-3. **Compound Growth:** Each project builds on the last. The Lisp interpreter taught me evaluation. That made the operational semantics posts easy. Those posts led to the research proposal.
-
-4. **Less Burnout:** You aren't trying to change your entire identity overnight. Some days I wrote React. Some days I wrote Haskell. The variety kept me energized.
 
 ## Your Turn
 
