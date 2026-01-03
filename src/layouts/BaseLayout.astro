@@ -61,6 +61,9 @@ const ogImage = image ? new URL(image, Astro.site).href : undefined;
     {ogImage && <meta name="twitter:image" content={ogImage} />}
   </head>
   <body>
+    <!-- Reading Progress Bar -->
+    <div class="reading-progress" id="readingProgress"></div>
+
     <div class="page">
       <Header />
       <main>
@@ -68,5 +71,91 @@ const ogImage = image ? new URL(image, Astro.site).href : undefined;
       </main>
       <Footer />
     </div>
+
+    <script>
+      // Scroll-triggered animations using IntersectionObserver
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      };
+
+      const animateOnScroll = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("animate-in");
+            // Optionally stop observing after animation
+            animateOnScroll.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      // Observe elements that should animate on scroll
+      document.addEventListener("DOMContentLoaded", () => {
+        // Sections
+        document.querySelectorAll(".section").forEach((el) => {
+          animateOnScroll.observe(el);
+        });
+
+        // Post items
+        document.querySelectorAll(".post-item").forEach((el) => {
+          animateOnScroll.observe(el);
+        });
+
+        // Project items
+        document.querySelectorAll(".project-item").forEach((el) => {
+          animateOnScroll.observe(el);
+        });
+
+        // Experience items
+        document.querySelectorAll(".experience-item").forEach((el) => {
+          animateOnScroll.observe(el);
+        });
+      });
+
+      // Header scroll effect
+      const header = document.querySelector(".header");
+      let lastScroll = 0;
+
+      window.addEventListener("scroll", () => {
+        const currentScroll = window.pageYOffset;
+
+        if (currentScroll > 50) {
+          header?.classList.add("scrolled");
+        } else {
+          header?.classList.remove("scrolled");
+        }
+
+        lastScroll = currentScroll;
+      });
+
+      // Reading progress bar
+      const progressBar = document.getElementById("readingProgress");
+
+      if (progressBar) {
+        window.addEventListener("scroll", () => {
+          const windowHeight = window.innerHeight;
+          const documentHeight =
+            document.documentElement.scrollHeight - windowHeight;
+          const scrolled = window.scrollY;
+          const progress = (scrolled / documentHeight) * 100;
+
+          progressBar.style.width = `${Math.min(progress, 100)}%`;
+        });
+      }
+    </script>
   </body>
 </html>
+
+<style is:global>
+  .reading-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: var(--gradient-accent);
+    width: 0%;
+    z-index: 1000;
+    transition: width 0.1s ease-out;
+    box-shadow: 0 0 10px var(--color-accent-glow);
+  }
+</style>
