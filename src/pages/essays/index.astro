@@ -1,0 +1,167 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const essays = (await getCollection("essays"))
+  .filter((essay) => !essay.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+}
+
+// Group essays by year
+const essaysByYear = essays.reduce(
+  (acc, essay) => {
+    const year = essay.data.date.getFullYear();
+    if (!acc[year]) acc[year] = [];
+    acc[year].push(essay);
+    return acc;
+  },
+  {} as Record<number, typeof essays>
+);
+
+const years = Object.keys(essaysByYear)
+  .map(Number)
+  .sort((a, b) => b - a);
+---
+
+<BaseLayout
+  title="Essays"
+  description="Long-form explorations on technology, learning, and life."
+>
+  <div class="container">
+    <section class="hero" style="padding-bottom: var(--space-xl);">
+      <h1 class="hero-title">Essays</h1>
+      <p class="hero-subtitle">
+        Long-form explorations on technology, learning, and the craft of
+        building things.
+      </p>
+    </section>
+
+    {
+      essays.length === 0 ? (
+        <section class="section">
+          <div class="empty-state">
+            <p class="empty-message">
+              No essays published yet. Check back soon!
+            </p>
+          </div>
+        </section>
+      ) : (
+        years.map((year) => (
+          <section class="section">
+            <div class="section-header">
+              <h2 class="section-title">{year}</h2>
+            </div>
+            <div class="essay-list">
+              {essaysByYear[year].map((essay) => (
+                <article class="essay-item">
+                  <a href={`/essays/${essay.slug}/`} class="essay-link">
+                    <h3 class="essay-title">{essay.data.title}</h3>
+                    {essay.data.subtitle && (
+                      <p class="essay-subtitle">{essay.data.subtitle}</p>
+                    )}
+                    {essay.data.description && (
+                      <p class="essay-description">{essay.data.description}</p>
+                    )}
+                  </a>
+                  <time
+                    class="essay-date"
+                    datetime={essay.data.date.toISOString()}
+                  >
+                    {formatDate(essay.data.date)}
+                  </time>
+                </article>
+              ))}
+            </div>
+          </section>
+        ))
+      )
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  .empty-state {
+    text-align: center;
+    padding: var(--space-3xl) 0;
+  }
+
+  .empty-message {
+    color: var(--color-text-secondary);
+    font-size: var(--text-lg);
+  }
+
+  .essay-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .essay-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding: var(--space-lg);
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.6s ease-out,
+      transform 0.6s ease-out,
+      border-color 0.2s ease;
+  }
+
+  .essay-item.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .essay-item:hover {
+    border-color: var(--color-accent);
+  }
+
+  .essay-link {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .essay-title {
+    font-size: var(--text-xl);
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0;
+    transition: color 0.2s ease;
+  }
+
+  .essay-link:hover .essay-title {
+    color: var(--color-accent);
+  }
+
+  .essay-subtitle {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    margin: var(--space-xs) 0 0 0;
+    font-style: italic;
+  }
+
+  .essay-description {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    margin: var(--space-sm) 0 0 0;
+    line-height: 1.6;
+  }
+
+  .essay-date {
+    font-size: var(--text-sm);
+    font-family: var(--font-mono);
+    color: var(--color-text-muted);
+  }
+</style>

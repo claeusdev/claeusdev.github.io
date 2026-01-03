@@ -63,7 +63,7 @@
   --space-4xl: 6rem;
 
   /* Layout */
-  --max-width: 680px;
+  --max-width: 800px;
   --header-height: 64px;
 
   /* Transitions */
@@ -370,7 +370,7 @@ main {
 
 .nav {
   display: flex;
-  gap: var(--space-xl);
+  gap: var(--space-lg);
 }
 
 .nav-link {
