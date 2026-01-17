@@ -3,13 +3,12 @@ import { SITE_TITLE } from "../consts";
 
 const currentPath = Astro.url.pathname;
 
+// Simplified navigation for researcher site - focus on key sections
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/posts", label: "Writing" },
-  { href: "/essays", label: "Essays" },
   { href: "/research", label: "Research" },
-  { href: "/projects", label: "Projects" },
-  { href: "/experience", label: "Experience" },
+  { href: "/posts", label: "Writing" },
+  { href: "/experience", label: "CV" },
 ];
 ---
 

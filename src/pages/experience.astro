@@ -1,45 +1,55 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { EXPERIENCE } from "../consts";
+import { EXPERIENCE, PUBLICATIONS } from "../consts";
 ---
 
 <BaseLayout
-  title="Experience"
-  description="Professional experience and skills."
+  title="CV"
+  description="Curriculum Vitae - Education, experience, and publications."
 >
   <div class="container">
-    <section class="hero" style="padding-bottom: var(--space-xl);">
-      <h1 class="hero-title">Experience</h1>
-      <p class="hero-subtitle">
-        My professional journey building software products across different
-        industries.
-      </p>
+    <section class="hero" style="padding-bottom: var(--space-lg);">
+      <h1 class="hero-title">Curriculum Vitae</h1>
+    </section>
+
+    <!-- Education -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Education</h2>
+      </div>
+      <div class="cv-item">
+        <div class="cv-header">
+          <h3 class="cv-title">M.Sc. Advanced Computer Science</h3>
+          <span class="cv-date">Distinction</span>
+        </div>
+        <p class="cv-org">University of Leicester, UK</p>
+      </div>
     </section>
 
     <!-- Work Experience -->
     <section class="section">
       <div class="section-header">
-        <h2 class="section-title">Work</h2>
+        <h2 class="section-title">Experience</h2>
       </div>
       <div class="experience-list">
         {
           EXPERIENCE.map((job) => (
             <div class="experience-item">
               <div class="experience-header">
-                <h3 class="experience-role">
-                  {job.role}{" "}
-                  <span class="experience-company">@ {job.company}</span>
-                </h3>
-                <p class="experience-meta">
-                  {job.duration} · {job.location}
-                </p>
+                <div>
+                  <h3 class="experience-role">{job.role}</h3>
+                  <p class="experience-org">
+                    {job.company}, {job.location}
+                  </p>
+                </div>
+                <span class="experience-date">{job.duration}</span>
               </div>
               <ul class="experience-details">
                 {job.details.map((detail) => (
                   <li
                     set:html={detail.replace(
                       /\*\*(.*?)\*\*/g,
-                      "<strong>$1</strong>"
+                      "<strong>$1</strong>",
                     )}
                   />
                 ))}
@@ -50,47 +60,181 @@ import { EXPERIENCE } from "../consts";
       </div>
     </section>
 
+    <!-- Publications -->
+    {
+      PUBLICATIONS && PUBLICATIONS.length > 0 && (
+        <section class="section">
+          <div class="section-header">
+            <h2 class="section-title">Publications</h2>
+          </div>
+          <div class="publications-list">
+            {PUBLICATIONS.map((pub) => (
+              <div class="pub-item">
+                <p class="pub-title">{pub.title}</p>
+                <p class="pub-authors">{pub.authors}</p>
+                <p class="pub-venue">
+                  {pub.venue}, {pub.year}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )
+    }
+
     <!-- Skills -->
     <section class="section">
       <div class="section-header">
         <h2 class="section-title">Skills</h2>
       </div>
-      <div class="skills-grid">
-        <div class="skills-category">
-          <h4>Languages</h4>
-          <p>TypeScript, Go, Ruby, Python, C/C++, Rust, OCaml, SQL, Haskell</p>
+      <div class="skills-list">
+        <div class="skill-row">
+          <span class="skill-label">Languages</span>
+          <span class="skill-value"
+            >TypeScript, Go, Ruby, Python, C/C++, Rust, OCaml, Haskell</span
+          >
         </div>
-        <div class="skills-category">
-          <h4>Frameworks & Tools</h4>
-          <p>
-            React, Elm, ReasonML, ReScript, Rails, FastAPI, Sidekiq, GraphQL
-          </p>
+        <div class="skill-row">
+          <span class="skill-label">Frameworks</span>
+          <span class="skill-value"
+            >React, Rails, FastAPI, GraphQL, Sidekiq</span
+          >
         </div>
-        <div class="skills-category">
-          <h4>Infrastructure</h4>
-          <p>PostgreSQL, Redis, Docker, AWS, GCP, Heroku, DigitalOcean</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Education -->
-    <section class="section">
-      <div class="section-header">
-        <h2 class="section-title">Education</h2>
-      </div>
-      <div
-        class="experience-item"
-        style="border-bottom: none; padding-bottom: 0;"
-      >
-        <div class="experience-header">
-          <h3 class="experience-role">
-            Master of Science in Advanced Computer Science
-          </h3>
-          <p class="experience-meta">
-            University of Leicester · Leicester, UK · Distinction
-          </p>
+        <div class="skill-row">
+          <span class="skill-label">Infrastructure</span>
+          <span class="skill-value">PostgreSQL, Redis, Docker, AWS, GCP</span>
         </div>
       </div>
     </section>
   </div>
 </BaseLayout>
+
+<style>
+  .cv-item {
+    padding: var(--space-sm) 0;
+  }
+
+  .cv-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .cv-title {
+    font-size: var(--text-base);
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .cv-date {
+    font-size: var(--text-sm);
+    font-family: var(--font-mono);
+    color: var(--color-text-muted);
+  }
+
+  .cv-org {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    margin: var(--space-xs) 0 0 0;
+  }
+
+  .experience-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--space-sm);
+  }
+
+  .experience-role {
+    font-size: var(--text-base);
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .experience-org {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    margin: var(--space-xs) 0 0 0;
+  }
+
+  .experience-date {
+    font-size: var(--text-sm);
+    font-family: var(--font-mono);
+    color: var(--color-text-muted);
+    white-space: nowrap;
+  }
+
+  .publications-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .pub-item {
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid var(--color-border-light);
+  }
+
+  .pub-item:last-child {
+    border-bottom: none;
+  }
+
+  .pub-title {
+    font-weight: 500;
+    color: var(--color-text);
+    margin: 0 0 var(--space-xs) 0;
+  }
+
+  .pub-authors {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    margin: 0 0 var(--space-xs) 0;
+  }
+
+  .pub-venue {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    font-style: italic;
+    margin: 0;
+  }
+
+  .skills-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .skill-row {
+    display: flex;
+    gap: var(--space-lg);
+  }
+
+  .skill-label {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-text-muted);
+    min-width: 100px;
+  }
+
+  .skill-value {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+  }
+
+  @media (max-width: 640px) {
+    .experience-header {
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .cv-header {
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .skill-row {
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+  }
+</style>

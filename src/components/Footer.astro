@@ -1,5 +1,10 @@
 ---
-import { GITHUB_USERNAME, TWITTER_USERNAME, EMAIL } from "../consts";
+import {
+  GITHUB_USERNAME,
+  TWITTER_USERNAME,
+  EMAIL,
+  LINKEDIN_URL,
+} from "../consts";
 ---
 
 <footer class="footer">
@@ -13,6 +18,9 @@ import { GITHUB_USERNAME, TWITTER_USERNAME, EMAIL } from "../consts";
       >
         GitHub
       </a>
+      <a href={LINKEDIN_URL} class="footer-link" target="_blank" rel="noopener">
+        LinkedIn
+      </a>
       <a
         href={`https://twitter.com/${TWITTER_USERNAME}`}
         class="footer-link"
@@ -21,8 +29,7 @@ import { GITHUB_USERNAME, TWITTER_USERNAME, EMAIL } from "../consts";
       >
         Twitter
       </a>
-      <a href={`mailto:${EMAIL}`} class="footer-link"> Email </a>
-      <a href="/rss.xml" class="footer-link"> RSS </a>
+      <a href={`mailto:${EMAIL}`} class="footer-link">Email</a>
     </div>
     <p class="footer-text">
       © {new Date().getFullYear()} Nana Adjei Manu

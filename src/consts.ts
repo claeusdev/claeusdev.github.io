@@ -4,6 +4,7 @@ export const AUTHOR = "Nana Adjei Manu";
 export const EMAIL = "n.k.a.manu06@gmail.com";
 export const GITHUB_USERNAME = "naamanu";
 export const TWITTER_USERNAME = "nmanu__";
+export const LINKEDIN_URL = "https://linkedin.com/in/nana-adjei-manu";
 
 export const PROJECTS = [
   {
