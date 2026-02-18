@@ -1,6 +1,6 @@
 export const SITE_TITLE = "Nana Adjei Manu";
 export const SITE_DESCRIPTION =
-  "Software engineer and independent researcher in programming language theory, semantics, formal methods, and data systems.";
+  "Software engineer and independent researcher working in programming language theory, semantics, formal methods, and data systems.";
 export const AUTHOR = "Nana Adjei Manu";
 export const EMAIL = "n.k.a.manu06@gmail.com";
 export const GITHUB_USERNAME = "naamanu";
@@ -11,35 +11,35 @@ export const PROJECTS = [
   {
     name: "L-Language",
     description:
-      "Minimal functional programming language implemented in Haskell and React for visualizing evaluation and semantics.",
+      "A minimal functional language in Haskell with a React visualizer for evaluation and operational semantics.",
     url: "https://github.com/claeusdev/l-lang",
     tags: ["Haskell", "React", "PLT"],
   },
   {
     name: "Rtpl",
     description:
-      "Real-time low-latency market data processing system achieving sub-5ms message latency for trading applications.",
+      "A low-latency market data pipeline for trading workloads, designed for sub-5ms message processing.",
     url: "https://github.com/claeusdev/rtpipe",
     tags: ["Systems", "Trading", "Low Latency"],
   },
   {
     name: "Sqll",
     description:
-      "Open-source SQL client library for Python using SQLite for embedded workflows.",
+      "An open-source Python SQL client built around SQLite for embedded workflows.",
     url: "https://github.com/claeusdev/sqll",
     tags: ["Python", "SQL", "Library"],
   },
   {
     name: "Pricc",
     description:
-      "C project generator written in Rust to simplify boilerplate systems development.",
+      "A C project generator written in Rust for faster systems development setup.",
     url: "https://github.com/claeusdev/pricc",
     tags: ["Rust", "C", "Tooling"],
   },
   {
     name: "rcv",
     description:
-      "A simple resume generator written in Rust that converts declarative .rcv files into beautiful PDFs.",
+      "A Rust resume generator that converts declarative .rcv files into PDF output.",
     url: "https://github.com/naamanu/rcv",
     tags: ["Rust", "PDF", "CLI"],
   },
@@ -53,19 +53,19 @@ export const PROJECTS = [
   {
     name: "gurl",
     description:
-      "A simple, colorful CLI wrapper around curl for easier terminal usage.",
+      "A CLI wrapper around curl for faster and more ergonomic terminal usage.",
     url: "https://github.com/naamanu/gurl",
     tags: ["Rust", "CLI", "Tooling"],
   },
   {
     name: "raptur",
-    description: "Simple express inspired router",
+    description: "An Express-inspired router for TypeScript backend services.",
     url: "https://github.com/naamanu/raptur",
     tags: ["TypeScript", "Router", "Backend"],
   },
   {
     name: "cashapp",
-    description: "Peer-to-peer payments service",
+    description: "A peer-to-peer payments service prototype.",
     url: "https://github.com/naamanu/cashapp",
     tags: ["Go", "Payments", "System"],
   },

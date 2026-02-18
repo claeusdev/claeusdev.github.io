@@ -3,11 +3,22 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { PROJECTS } from "../consts";
 ---
 
-<BaseLayout title="Projects">
+<BaseLayout
+  title="Projects"
+  description="Selected software projects in programming languages, systems, and tooling."
+>
   <div class="container">
+    <section class="hero" style="padding-bottom: var(--space-lg);">
+      <h1 class="hero-title">Projects</h1>
+      <p class="hero-subtitle">
+        Selected software projects in programming languages, systems, and
+        tooling.
+      </p>
+    </section>
+
     <section class="section">
       <div class="section-header">
-        <h1 class="section-title">Projects</h1>
+        <h2 class="section-title">Selected Work</h2>
       </div>
       <div class="project-list">
         {
@@ -23,11 +34,9 @@ import { PROJECTS } from "../consts";
               </a>
               <p class="project-description">{project.description}</p>
               {project.tags && (
-                <div class="project-tags">
-                  {project.tags.map((tag) => (
-                    <span class="tag">{tag}</span>
-                  ))}
-                </div>
+                <p class="project-tags">
+                  Areas: {project.tags.join(", ")}
+                </p>
               )}
             </div>
           ))
@@ -39,19 +48,10 @@ import { PROJECTS } from "../consts";
 
 <style>
   .project-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-xs);
     margin-top: var(--space-xs);
-  }
-
-  .tag {
-    font-size: var(--text-xs);
+    font-size: var(--text-sm);
     font-family: var(--font-mono);
     color: var(--color-text-muted);
-    background-color: var(--color-bg-secondary);
-    border: 1px solid var(--color-border);
-    padding: 2px 6px;
-    border-radius: var(--radius-sm);
+    margin-bottom: 0;
   }
 </style>

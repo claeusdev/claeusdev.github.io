@@ -31,14 +31,15 @@ const years = Object.keys(postsByYear)
 ---
 
 <BaseLayout
-  title="Writing"
-  description="Thoughts on programming, systems, and learning."
+  title="Blog"
+  description="Essays and technical notes on programming language theory, semantics, formal methods, and software engineering."
 >
   <div class="container">
     <section class="hero" style="padding-bottom: var(--space-xl);">
-      <h1 class="hero-title">Writing</h1>
+      <h1 class="hero-title">Blog</h1>
       <p class="hero-subtitle">
-        Thoughts on programming, systems, algorithms, and things I'm learning.
+        Essays and technical notes on programming language theory, semantics,
+        formal methods, and practical engineering.
       </p>
     </section>
 
@@ -46,7 +47,7 @@ const years = Object.keys(postsByYear)
       years.map((year) => (
         <section class="section">
           <div class="section-header">
-            <h2 class="section-title">{year}</h2>
+            <h2 class="year-heading">{year}</h2>
           </div>
           <div class="post-list">
             {postsByYear[year].map((post) => (
@@ -65,3 +66,13 @@ const years = Object.keys(postsByYear)
     }
   </div>
 </BaseLayout>
+
+<style>
+  .year-heading {
+    margin: 0;
+    font-size: var(--text-base);
+    font-family: var(--font-mono);
+    font-weight: 500;
+    color: var(--color-text-muted);
+  }
+</style>

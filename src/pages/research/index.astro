@@ -26,13 +26,14 @@ function getStatusLabel(status: string | undefined) {
 
 <BaseLayout
   title="Research"
-  description="Academic research, papers, and technical explorations."
+  description="Research papers and technical notes on programming language theory, semantics, formal methods, and data systems."
 >
   <div class="container">
     <section class="hero" style="padding-bottom: var(--space-lg);">
       <h1 class="hero-title">Research</h1>
       <p class="hero-subtitle">
-        Papers and technical explorations in programming languages and systems.
+        Papers and technical notes on programming language theory, semantics,
+        formal methods, and data systems.
       </p>
     </section>
 
@@ -41,7 +42,7 @@ function getStatusLabel(status: string | undefined) {
         <section class="section">
           <div class="empty-state">
             <p class="empty-message">
-              No research papers published yet. Check back soon.
+              No research papers listed yet. Check back soon.
             </p>
           </div>
         </section>
@@ -66,7 +67,7 @@ function getStatusLabel(status: string | undefined) {
                 )}
                 {paper.data.coAuthors && paper.data.coAuthors.length > 0 && (
                   <p class="research-authors">
-                    with {paper.data.coAuthors.join(", ")}
+                    Co-authors: {paper.data.coAuthors.join(", ")}
                   </p>
                 )}
                 {paper.data.abstract && (
@@ -74,7 +75,7 @@ function getStatusLabel(status: string | undefined) {
                 )}
                 <div class="research-links">
                   <a href={`/research/${paper.slug}/`} class="paper-link">
-                    Read →
+                    Read
                   </a>
                   {paper.data.pdfUrl && (
                     <a
