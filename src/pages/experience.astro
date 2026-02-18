@@ -1,11 +1,11 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { EXPERIENCE, PUBLICATIONS } from "../consts";
+import { EXPERIENCE } from "../consts";
 ---
 
 <BaseLayout
   title="CV"
-  description="Curriculum Vitae - Education, experience, and publications."
+  description="Curriculum Vitae - Education, experience, and skills."
 >
   <div class="container">
     <section class="hero" style="padding-bottom: var(--space-lg);">
@@ -59,28 +59,6 @@ import { EXPERIENCE, PUBLICATIONS } from "../consts";
         }
       </div>
     </section>
-
-    <!-- Publications -->
-    {
-      PUBLICATIONS && PUBLICATIONS.length > 0 && (
-        <section class="section">
-          <div class="section-header">
-            <h2 class="section-title">Publications</h2>
-          </div>
-          <div class="publications-list">
-            {PUBLICATIONS.map((pub) => (
-              <div class="pub-item">
-                <p class="pub-title">{pub.title}</p>
-                <p class="pub-authors">{pub.authors}</p>
-                <p class="pub-venue">
-                  {pub.venue}, {pub.year}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-      )
-    }
 
     <!-- Skills -->
     <section class="section">
@@ -162,40 +140,6 @@ import { EXPERIENCE, PUBLICATIONS } from "../consts";
     font-family: var(--font-mono);
     color: var(--color-text-muted);
     white-space: nowrap;
-  }
-
-  .publications-list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-  }
-
-  .pub-item {
-    padding-bottom: var(--space-md);
-    border-bottom: 1px solid var(--color-border-light);
-  }
-
-  .pub-item:last-child {
-    border-bottom: none;
-  }
-
-  .pub-title {
-    font-weight: 500;
-    color: var(--color-text);
-    margin: 0 0 var(--space-xs) 0;
-  }
-
-  .pub-authors {
-    font-size: var(--text-sm);
-    color: var(--color-text-secondary);
-    margin: 0 0 var(--space-xs) 0;
-  }
-
-  .pub-venue {
-    font-size: var(--text-sm);
-    color: var(--color-text-muted);
-    font-style: italic;
-    margin: 0;
   }
 
   .skills-list {
