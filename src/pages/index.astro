@@ -1,7 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
-import { PUBLICATIONS } from "../consts";
 
 // Get recent posts (latest 5)
 const posts = (await getCollection("posts"))
@@ -27,17 +26,19 @@ function formatDate(date: Date): string {
 // Research interests
 const researchInterests = [
   {
-    area: "Programming Languages",
-    description: "Type systems, operational semantics, and language design",
-  },
-  {
-    area: "Distributed Systems",
+    area: "Programming Language Theory",
     description:
-      "Consistency models, fault tolerance, and distributed algorithms",
+      "Type systems, language semantics, interpreters, and formal models",
   },
   {
-    area: "Developer Tools",
-    description: "Static analysis, build systems, and developer experience",
+    area: "Semantics and Formal Methods",
+    description:
+      "Operational semantics, proof-oriented reasoning, and program correctness",
+  },
+  {
+    area: "Data and Systems",
+    description:
+      "Data-intensive systems, reliability, and practical tooling for research",
   },
 ];
 ---
@@ -53,11 +54,11 @@ const researchInterests = [
           class="profile-photo"
         />
         <div class="hero-content">
+          <h1 class="hero-title">Nana Adjei Manu</h1>
           <p class="hero-subtitle">
-            I'm a software engineer and researcher interested in programming
-            languages, distributed systems, and developer tools. I'm currently
-            exploring how to make software systems more reliable and easier to
-            reason about.
+            I am a software engineer and independent researcher interested in
+            how programs are specified, reasoned about, and made reliable —
+            through programming language theory, semantics, and formal methods.
           </p>
           <div class="hero-links">
             <a href="mailto:n.k.a.manu06@gmail.com" class="hero-link">Email</a>
@@ -130,7 +131,7 @@ const researchInterests = [
     <!-- Writing Section -->
     <section class="section">
       <div class="section-header">
-        <h2 class="section-title">Writing</h2>
+        <h2 class="section-title">Blog</h2>
         <a href="/posts" class="section-link">All posts →</a>
       </div>
       <div class="post-list">
@@ -163,9 +164,10 @@ const researchInterests = [
         spanned frontend, backend, and infrastructure.
       </p>
       <p>
-        I hold a Master's degree in Advanced Computer Science from the
-        University of Leicester (Distinction). Outside of work, I enjoy
-        functional programming, reading, and playing sports.
+        My academic background is in advanced computer science, with a focus on
+        operational semantics (MSc, University of Leicester, Distinction). I
+        continue to research and write independently at the intersection of PL
+        theory, semantics, and practical systems.
       </p>
     </section>
   </div>
@@ -179,19 +181,12 @@ const researchInterests = [
   }
 
   .profile-photo {
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
+    width: 96px;
+    height: 96px;
+    border-radius: 4px;
     object-fit: cover;
     flex-shrink: 0;
-    border: 3px solid var(--color-border);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    filter: grayscale(10%);
-    transition: filter 0.2s ease;
-  }
-
-  .profile-photo:hover {
-    filter: grayscale(0%);
+    border: 1px solid var(--color-border);
   }
 
   .hero-content {
@@ -210,9 +205,9 @@ const researchInterests = [
   }
 
   .interest-area {
-    font-weight: 500;
+    font-weight: 600;
     color: var(--color-text);
-    min-width: 180px;
+    min-width: 260px;
     flex-shrink: 0;
   }
 
@@ -258,17 +253,17 @@ const researchInterests = [
   @media (max-width: 640px) {
     .hero-intro {
       flex-direction: column;
-      align-items: center;
-      text-align: center;
+      align-items: flex-start;
+      text-align: left;
     }
 
     .profile-photo {
-      width: 100px;
-      height: 100px;
+      width: 88px;
+      height: 88px;
     }
 
     .hero-links {
-      justify-content: center;
+      justify-content: flex-start;
     }
 
     .interest-item {
