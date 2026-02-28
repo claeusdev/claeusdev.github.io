@@ -3,7 +3,6 @@ import { SITE_TITLE } from "../consts";
 
 const currentPath = Astro.url.pathname;
 
-// Navigation for researcher site
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/research", label: "Research" },
@@ -14,7 +13,7 @@ const navLinks = [
 ---
 
 <header class="header">
-  <div class="container header-inner">
+  <div class="header-inner">
     <a href="/" class="logo">{SITE_TITLE}</a>
     <nav class="nav">
       {
@@ -29,6 +28,12 @@ const navLinks = [
                   (link.href !== "/" && currentPath.startsWith(link.href)),
               },
             ]}
+            aria-current={
+              currentPath === link.href ||
+              (link.href !== "/" && currentPath.startsWith(link.href))
+                ? "page"
+                : undefined
+            }
           >
             {link.label}
           </a>

@@ -6,6 +6,7 @@ interface Props {
 }
 
 import { SITE_TITLE, SITE_DESCRIPTION, AUTHOR } from "../consts";
+import { ClientRouter } from "astro:transitions";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import "../styles/global.css";
@@ -28,11 +29,11 @@ const ogImage = image ? new URL(image, Astro.site).href : undefined;
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <!-- Fonts - Classic academic stack -->
+    <!-- Fonts — Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Source+Sans+3:wght@400;500;600&family=Source+Serif+4:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
 
@@ -59,6 +60,8 @@ const ogImage = image ? new URL(image, Astro.site).href : undefined;
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={pageDescription} />
     {ogImage && <meta name="twitter:image" content={ogImage} />}
+
+    <ClientRouter />
   </head>
   <body>
     <div class="page">

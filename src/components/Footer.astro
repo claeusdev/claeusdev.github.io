@@ -8,31 +8,10 @@ import {
 ---
 
 <footer class="footer">
-  <div class="container footer-inner">
-    <div class="footer-links">
-      <a
-        href={`https://github.com/${GITHUB_USERNAME}`}
-        class="footer-link"
-        target="_blank"
-        rel="noopener"
-      >
-        GitHub
-      </a>
-      <a href={LINKEDIN_URL} class="footer-link" target="_blank" rel="noopener">
-        LinkedIn
-      </a>
-      <a
-        href={`https://twitter.com/${TWITTER_USERNAME}`}
-        class="footer-link"
-        target="_blank"
-        rel="noopener"
-      >
-        Twitter
-      </a>
-      <a href={`mailto:${EMAIL}`} class="footer-link">Email</a>
-    </div>
+  <div class="footer-inner">
     <p class="footer-text">
-      © {new Date().getFullYear()} Nana Adjei Manu
+      © {new Date().getFullYear()} Nana Adjei Manu ·
+      <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
     </p>
   </div>
 </footer>

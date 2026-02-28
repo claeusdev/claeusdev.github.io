@@ -1,6 +1,13 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
+import {
+  PROJECTS,
+  EMAIL,
+  GITHUB_USERNAME,
+  TWITTER_USERNAME,
+  LINKEDIN_URL,
+} from "../consts";
 
 // Get recent posts (latest 5)
 const posts = (await getCollection("posts"))
@@ -14,7 +21,6 @@ const research = (await getCollection("research"))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 3);
 
-// Better date formatting - full date with day
 function formatDate(date: Date): string {
   return date.toLocaleDateString("en-US", {
     year: "numeric",
@@ -22,96 +28,86 @@ function formatDate(date: Date): string {
     day: "numeric",
   });
 }
-
-// Research interests
-const researchInterests = [
-  {
-    area: "Programming Language Theory",
-    description:
-      "Type systems, language semantics, interpreters, and formal models",
-  },
-  {
-    area: "Semantics and Formal Methods",
-    description:
-      "Operational semantics, proof-oriented reasoning, and program correctness",
-  },
-  {
-    area: "Data and Systems",
-    description:
-      "Data-intensive systems, reliability, and practical tooling for research",
-  },
-];
 ---
 
 <BaseLayout>
   <div class="container">
-    <!-- Hero Section with Photo -->
-    <section class="hero">
-      <div class="hero-intro">
+    <!-- Bio Section — text + photo side by side -->
+    <section class="bio-section">
+      <div class="bio-content">
+        <div class="bio-text">
+          <p>
+            I'm a software engineer and independent researcher focused on how
+            programs are specified, reasoned about, and made reliable through
+            programming language theory, semantics, and formal methods. I hold
+            an MSc in Advanced Computer Science from the
+            <a href="https://le.ac.uk">University of Leicester</a>, where my
+            thesis focused on operational semantics.
+          </p>
+          <p>
+            I've worked at companies including
+            <a href="https://rhino.com">Rhino</a>,
+            <a href="https://leafly.com">Leafly</a>,
+            <a href="https://andela.com">Andela</a>, and
+            <a href="https://housinganywhere.com">HousingAnywhere</a>. My work
+            has spanned frontend, backend, and infrastructure. I continue
+            independent research and writing at the intersection of programming
+            language theory, semantics, and practical systems.
+          </p>
+          <p>
+            I'm on
+            <a href={`https://github.com/${GITHUB_USERNAME}`}>GitHub</a>,
+            <a href={LINKEDIN_URL}>LinkedIn</a>, and
+            <a href={`https://twitter.com/${TWITTER_USERNAME}`}>Twitter</a>. To
+            get in touch, email me at
+            <a href={`mailto:${EMAIL}`}>{EMAIL}</a>.
+          </p>
+        </div>
         <img
           src="https://avatars.githubusercontent.com/u/17507528?v=4"
           alt="Nana Adjei Manu"
-          class="profile-photo"
+          class="bio-photo"
         />
-        <div class="hero-content">
-          <h1 class="hero-title">Nana Adjei Manu</h1>
-          <p class="hero-subtitle">
-            I am a software engineer and independent researcher focused on how
-            programs are specified, reasoned about, and made reliable through
-            programming language theory, semantics, and formal methods.
-          </p>
-          <div class="hero-links">
-            <a href="mailto:n.k.a.manu06@gmail.com" class="hero-link">Email</a>
-            <a
-              href="https://github.com/naamanu"
-              class="hero-link"
-              target="_blank"
-              rel="noopener">GitHub</a
-            >
-            <a
-              href="https://linkedin.com/in/nana-adjei-manu"
-              class="hero-link"
-              target="_blank"
-              rel="noopener">LinkedIn</a
-            >
-            <a
-              href="https://twitter.com/nmanu__"
-              class="hero-link"
-              target="_blank"
-              rel="noopener">Twitter</a
-            >
-          </div>
-        </div>
       </div>
     </section>
 
-    <!-- Research Interests -->
+    <!-- Open Source Projects -->
     <section class="section">
-      <div class="section-header">
-        <h2 class="section-title">Research Interests</h2>
-      </div>
-      <div class="interests-list">
+      <h2>Open Source Projects</h2>
+      <p>
+        I build tools and libraries across programming languages, systems, and
+        tooling. All projects can be found on
+        <a href={`https://github.com/${GITHUB_USERNAME}`}>my GitHub page</a>.
+        Some of my projects include:
+      </p>
+      <ul class="project-bullets">
         {
-          researchInterests.map((interest) => (
-            <div class="interest-item">
-              <span class="interest-area">{interest.area}</span>
-              <span class="interest-desc">{interest.description}</span>
-            </div>
+          PROJECTS.map((project) => (
+            <li>
+              <div>
+                <a href={project.url} target="_blank" rel="noopener">
+                  <strong>{project.name}</strong>
+                </a>{" "}
+                - {project.description}
+              </div>
+              {project.tags && (
+                <div class="tag-list">
+                  {project.tags.map((tag) => (
+                    <span class="tag">{tag}</span>
+                  ))}
+                </div>
+              )}
+            </li>
           ))
         }
-      </div>
+      </ul>
     </section>
 
-    <!-- Research Section -->
+    <!-- Selected Publications -->
     {
       research.length > 0 && (
         <section class="section">
-          <div class="section-header">
-            <h2 class="section-title">Selected Publications</h2>
-            <a href="/research" class="section-link">
-              All papers →
-            </a>
-          </div>
+          <h2>Selected Publications</h2>
           <div class="publications-list">
             {research.map((paper) => (
               <div class="publication-item">
@@ -124,156 +120,96 @@ const researchInterests = [
               </div>
             ))}
           </div>
+          <p>
+            <a href="/research">All papers →</a>
+          </p>
         </section>
       )
     }
 
-    <!-- Blog Section -->
+    <!-- Recent Blog Posts -->
     <section class="section">
-      <div class="section-header">
-        <h2 class="section-title">Blog</h2>
-        <a href="/posts" class="section-link">All posts →</a>
-      </div>
-      <div class="post-list">
+      <h2>Recent Posts</h2>
+      <ul class="post-bullets">
         {
           posts.map((post) => (
-            <article class="post-item">
-              <a href={`/posts/${post.slug}/`} class="post-link">
-                {post.data.title}
-              </a>
-              <time class="post-date" datetime={post.data.date.toISOString()}>
-                {formatDate(post.data.date)}
-              </time>
-            </article>
+            <li>
+              <a href={`/posts/${post.slug}/`}>{post.data.title}</a>
+              <span class="post-date-inline">
+                , {formatDate(post.data.date)}
+              </span>
+            </li>
           ))
         }
-      </div>
-    </section>
-
-    <!-- Background Section -->
-    <section class="section">
-      <div class="section-header">
-        <h2 class="section-title">Background</h2>
-      </div>
+      </ul>
       <p>
-        I've worked as a software engineer at companies including
-        <a href="https://rhino.com">Rhino</a>,
-        <a href="https://leafly.com">Leafly</a>,
-        <a href="https://andela.com">Andela</a>, and
-        <a href="https://housinganywhere.com">HousingAnywhere</a>. My work has
-        spanned frontend, backend, and infrastructure.
-      </p>
-      <p>
-        I hold an MSc in Advanced Computer Science from the University of
-        Leicester (Distinction), where my thesis focused on operational
-        semantics. I continue independent research and writing at the
-        intersection of programming language theory, semantics, and practical
-        systems.
+        <a href="/posts">All posts →</a>
       </p>
     </section>
   </div>
 </BaseLayout>
 
 <style>
-  .hero-intro {
+  .bio-section {
+    margin-bottom: var(--space-xl);
+  }
+
+  .bio-content {
     display: flex;
-    gap: var(--space-lg);
+    gap: var(--space-xl);
     align-items: flex-start;
   }
 
-  .profile-photo {
-    width: 96px;
-    height: 96px;
-    border-radius: 4px;
-    object-fit: cover;
-    flex-shrink: 0;
-    border: 1px solid var(--color-border);
-  }
-
-  .hero-content {
+  .bio-text {
     flex: 1;
   }
 
-  .interests-list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-  }
-
-  .interest-item {
-    display: flex;
-    gap: var(--space-md);
-  }
-
-  .interest-area {
-    font-weight: 600;
-    color: var(--color-text);
-    min-width: 260px;
+  .bio-photo {
+    width: 160px;
+    height: 160px;
+    min-width: 160px;
+    object-fit: cover;
     flex-shrink: 0;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
 
-  .interest-desc {
-    color: var(--color-text-secondary);
-    font-size: var(--text-sm);
+  .project-bullets {
+    margin: var(--space-sm) 0 var(--space-md);
+    padding-left: 2rem;
   }
 
-  .publications-list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
+  .project-bullets li {
+    margin-bottom: var(--space-sm);
   }
 
-  .publication-item {
-    padding-bottom: var(--space-sm);
-    border-bottom: 1px solid var(--color-border-light);
-  }
-
-  .publication-item:last-child {
-    border-bottom: none;
-  }
-
-  .publication-title {
-    font-weight: 500;
-    color: var(--color-text);
-    text-decoration: none;
-    display: block;
-    margin-bottom: var(--space-xs);
-  }
-
-  .publication-title:hover {
+  .project-bullets a {
     color: var(--color-link);
   }
 
-  .publication-venue {
+  .post-bullets {
+    margin: var(--space-sm) 0 var(--space-md);
+    padding-left: 2rem;
+    list-style: disc;
+  }
+
+  .post-bullets li {
+    margin-bottom: var(--space-xs);
+  }
+
+  .post-date-inline {
+    color: var(--color-text-muted);
     font-size: var(--text-sm);
-    color: var(--color-text-secondary);
-    font-style: italic;
-    margin: 0;
   }
 
   @media (max-width: 640px) {
-    .hero-intro {
+    .bio-content {
       flex-direction: column;
-      align-items: flex-start;
-      text-align: left;
     }
 
-    .profile-photo {
-      width: 88px;
-      height: 88px;
-    }
-
-    .hero-links {
-      justify-content: flex-start;
-    }
-
-    .interest-item {
-      flex-direction: column;
-      gap: var(--space-xs);
-    }
-
-    .interest-area {
-      min-width: auto;
+    .bio-photo {
+      width: 120px;
+      height: 120px;
     }
   }
 </style>
