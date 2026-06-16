@@ -53,8 +53,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).href;
     <!-- Canonical -->
     <link rel="canonical" href={canonicalURL} />
 
-    <!-- Favicon -->
+    <!-- Favicon & PWA -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#171717" />
 
     <!-- Fonts — Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -79,6 +82,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).href;
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:site_name" content={SITE_TITLE} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />

@@ -1,0 +1,42 @@
+name: Quality
+
+# Runs on PRs and on pushes to any branch except the deploy branch.
+# Independent of deploy.yml — this never publishes, it only checks.
+on:
+  pull_request:
+  push:
+    branches-ignore: [gh-pages]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Build & link check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type & content check
+        run: npx astro check
+        continue-on-error: true
+
+      - name: Build
+        run: npm run build
+
+      - name: Check internal links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: "--offline --base dist --no-progress 'dist/**/*.html'"
+          fail: true

@@ -225,6 +225,28 @@ p {
   color: var(--color-text);
 }
 
+/* Hover anchor links on headings (rehype-autolink-headings) */
+.post-content :is(h2, h3, h4),
+.essay-content :is(h2, h3, h4),
+.paper-content :is(h2, h3, h4) {
+  position: relative;
+}
+
+.heading-anchor {
+  margin-left: 0.4em;
+  font-family: var(--font-mono);
+  font-weight: 400;
+  color: var(--color-accent);
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+
+:is(h2, h3, h4):hover .heading-anchor,
+.heading-anchor:focus-visible {
+  opacity: 1;
+}
+
 a {
   color: var(--color-link);
   text-decoration: none;
@@ -289,6 +311,47 @@ hr {
   border: none;
   border-top: 1px solid var(--color-border);
   margin: var(--space-2xl) 0;
+}
+
+/* Tables (markdown) */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--space-lg) 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+th,
+td {
+  padding: var(--space-sm) var(--space-md);
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: top;
+}
+
+thead th {
+  font-weight: 600;
+  color: var(--color-text);
+  border-bottom: 2px solid var(--color-border);
+}
+
+tbody tr:hover {
+  background: var(--color-bg-secondary);
+}
+
+td {
+  color: var(--color-text-secondary);
+}
+
+/* Let wide tables scroll on small screens */
+.post-content table,
+.essay-content table,
+.paper-content table {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
 }
 
 /* ==========================================================================
