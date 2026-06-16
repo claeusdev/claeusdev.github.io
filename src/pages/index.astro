@@ -7,7 +7,24 @@ import {
   GITHUB_USERNAME,
   TWITTER_USERNAME,
   LINKEDIN_URL,
+  AUTHOR,
+  SITE_DESCRIPTION,
 } from "../consts";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: AUTHOR,
+  description: SITE_DESCRIPTION,
+  email: `mailto:${EMAIL}`,
+  url: new URL("/", Astro.site).href,
+  jobTitle: "Software Engineer and Independent Researcher",
+  sameAs: [
+    `https://github.com/${GITHUB_USERNAME}`,
+    LINKEDIN_URL,
+    `https://twitter.com/${TWITTER_USERNAME}`,
+  ],
+};
 
 // Get recent posts (latest 5)
 const posts = (await getCollection("posts"))
@@ -30,7 +47,7 @@ function formatDate(date: Date): string {
 }
 ---
 
-<BaseLayout>
+<BaseLayout jsonLd={jsonLd}>
   <div class="container">
     <!-- Bio Section — text + photo side by side -->
     <section class="bio-section">
@@ -45,14 +62,18 @@ function formatDate(date: Date): string {
             thesis focused on operational semantics.
           </p>
           <p>
-            I've worked at companies including
+            I'm currently a Product Engineer at
+            <a href="https://hello-charles.com">charles</a> in Berlin, and was
+            previously a frontend product engineer at
+            <a href="https://www.suitepad.de">SuitePad</a>. Before that, I
+            worked at companies including
             <a href="https://rhino.com">Rhino</a>,
             <a href="https://leafly.com">Leafly</a>,
             <a href="https://andela.com">Andela</a>, and
-            <a href="https://housinganywhere.com">HousingAnywhere</a>. My work
-            has spanned frontend, backend, and infrastructure. I continue
-            independent research and writing at the intersection of programming
-            language theory, semantics, and practical systems.
+            <a href="https://housinganywhere.com">HousingAnywhere</a>, spanning
+            frontend, backend, and infrastructure. I continue independent
+            research and writing at the intersection of programming language
+            theory, semantics, and practical systems.
           </p>
           <p>
             I'm on

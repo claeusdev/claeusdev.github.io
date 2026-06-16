@@ -1,0 +1,74 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import {
+  EMAIL,
+  GITHUB_USERNAME,
+  TWITTER_USERNAME,
+  LINKEDIN_URL,
+} from "../consts";
+---
+
+<BaseLayout
+  title="About"
+  description="About Nana Adjei Manu — software engineer and independent researcher in programming language theory, semantics, and formal methods."
+>
+  <div class="container">
+    <section class="hero" style="padding-bottom: var(--space-lg);">
+      <h1 class="hero-title">About</h1>
+      <p class="hero-subtitle">
+        Software engineer and independent researcher.
+      </p>
+    </section>
+
+    <section class="section">
+      <p>
+        I'm a software engineer and independent researcher focused on how
+        programs are specified, reasoned about, and made reliable — through
+        programming language theory, semantics, and formal methods. I hold an
+        MSc in Advanced Computer Science from the
+        <a href="https://le.ac.uk">University of Leicester</a>, where my thesis
+        focused on operational semantics.
+      </p>
+      <p>
+        I'm currently a Product Engineer at
+        <a href="https://hello-charles.com">charles</a> in Berlin — an
+        AI-native conversational marketing and commerce platform — and was
+        previously a frontend product engineer at
+        <a href="https://www.suitepad.de">SuitePad</a>. Earlier, I worked across
+        frontend, backend, and infrastructure at companies including
+        <a href="https://rhino.com">Rhino</a>,
+        <a href="https://leafly.com">Leafly</a>,
+        <a href="https://andela.com">Andela</a>, and
+        <a href="https://housinganywhere.com">HousingAnywhere</a>. Alongside
+        that work, I keep up an independent research and writing practice at the
+        intersection of language theory and practical systems.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>What I write about</h2>
+      <p>
+        Most of my writing lives on the <a href="/posts">blog</a> — operational
+        semantics, type systems, functional programming, and the occasional
+        detour into how I think about learning and the craft of building
+        things. If you're new here, <a
+          href="/posts/how-i-became-an-engineer/"
+          >how I became an engineer</a
+        > is a good place to start. You can also browse everything by
+        <a href="/tags">topic</a>.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>Elsewhere</h2>
+      <p>
+        I'm on
+        <a href={`https://github.com/${GITHUB_USERNAME}`}>GitHub</a>,
+        <a href={LINKEDIN_URL}>LinkedIn</a>, and
+        <a href={`https://twitter.com/${TWITTER_USERNAME}`}>Twitter</a>. The
+        <a href="/experience">CV</a> has the full work history. To get in touch,
+        email me at <a href={`mailto:${EMAIL}`}>{EMAIL}</a>.
+      </p>
+    </section>
+  </div>
+</BaseLayout>

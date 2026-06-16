@@ -8,6 +8,7 @@
   /* Colors — clean, minimal */
   --color-bg: #ffffff;
   --color-bg-alt: #f8f8f6;
+  --color-bg-secondary: var(--color-bg-alt);
   --color-text: #111111;
   --color-text-secondary: #555555;
   --color-text-muted: #888888;
@@ -18,6 +19,7 @@
   --color-accent: #2563eb;
   --color-accent-light: rgba(37, 99, 235, 0.06);
   --color-accent-gradient: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+  --gradient-accent: var(--color-accent-gradient);
 
   /* Links */
   --color-link: #2563eb;
@@ -36,6 +38,7 @@
   --text-xl: 1.25rem;
   --text-2xl: 1.5rem;
   --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
 
   /* Spacing */
   --space-xs: 0.25rem;
@@ -51,7 +54,46 @@
 
   /* Effects */
   --radius: 6px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
   --transition: 180ms ease;
+}
+
+/* Dark theme — applied when <html data-theme="dark"> */
+:root[data-theme="dark"] {
+  --color-bg: #0f1115;
+  --color-bg-alt: #181b21;
+  --color-text: #e7e7e4;
+  --color-text-secondary: #a9aaa6;
+  --color-text-muted: #7c7d79;
+  --color-border: #2a2e36;
+  --color-border-light: #20242b;
+
+  --color-accent: #3b82f6;
+  --color-accent-light: rgba(59, 130, 246, 0.14);
+  --color-accent-gradient: linear-gradient(135deg, #3b82f6 0%, #a78bfa 100%);
+
+  --color-link: #60a5fa;
+  --color-link-hover: #93c5fd;
+}
+
+:root {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+/* Dual-theme Shiki code blocks: swap to dark colors under the dark theme */
+:root[data-theme="dark"] .astro-code,
+:root[data-theme="dark"] .astro-code span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
 }
 
 /* ==========================================================================
@@ -98,6 +140,25 @@ body::before {
 ::selection {
   background: rgba(37, 99, 235, 0.12);
   color: var(--color-text);
+}
+
+/* Skip-to-content link — visible only on keyboard focus */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 300;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-accent);
+  color: #ffffff;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  font-size: var(--text-sm);
+}
+
+.skip-link:focus {
+  left: var(--space-md);
+  top: var(--space-md);
 }
 
 /* ==========================================================================
@@ -202,6 +263,7 @@ code {
 }
 
 pre {
+  position: relative;
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   background-color: var(--color-bg-alt);
@@ -211,6 +273,33 @@ pre {
   overflow-x: auto;
   margin: var(--space-lg) 0;
   line-height: 1.55;
+}
+
+/* Copy-to-clipboard button injected into code blocks */
+.copy-code {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  padding: 0.2em 0.5em;
+  color: var(--color-text-secondary);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity var(--transition), color var(--transition);
+}
+
+pre:hover .copy-code,
+.copy-code:focus-visible {
+  opacity: 1;
+}
+
+.copy-code:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
 }
 
 pre code {
@@ -319,6 +408,43 @@ main {
 .nav-link.active {
   color: var(--color-accent);
   font-weight: 550;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2em;
+  height: 2em;
+  padding: 0;
+  margin-left: var(--space-xs);
+  color: var(--color-text-muted);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: color var(--transition), background var(--transition);
+}
+
+.theme-toggle:hover {
+  color: var(--color-text);
+  background: var(--color-accent-light);
+}
+
+.icon-sun {
+  display: none;
+}
+
+.icon-moon {
+  display: block;
+}
+
+:root[data-theme="dark"] .icon-sun {
+  display: block;
+}
+
+:root[data-theme="dark"] .icon-moon {
+  display: none;
 }
 
 /* ==========================================================================

@@ -7,6 +7,15 @@ export const GITHUB_USERNAME = "naamanu";
 export const TWITTER_USERNAME = "nmanu__";
 export const LINKEDIN_URL = "https://linkedin.com/in/nana-adjei-manu";
 
+// --- Optional integrations (left empty = feature stays hidden) -------------
+// Privacy-friendly analytics. Create a free site at https://www.goatcounter.com
+// and put your site code here (the "<code>" in <code>.goatcounter.com).
+export const GOATCOUNTER_CODE = "";
+
+// Newsletter. Set this to your form-submit endpoint (e.g. a Buttondown,
+// Mailchimp, or ConvertKit form action URL). Empty = subscribe box hidden.
+export const NEWSLETTER_ACTION_URL = "";
+
 export const PROJECTS = [
   {
     name: "L-Language",
@@ -73,8 +82,26 @@ export const PROJECTS = [
 
 export const EXPERIENCE = [
   {
+    company: "charles (charlesAI)",
+    role: "Product Engineer",
+    location: "Berlin, Germany",
+    duration: "May 2026 -- Present",
+    details: [
+      "Product engineer at **charles**, an AI-native conversational marketing and commerce platform for consumer brands, building customer-facing product across the messaging and commerce experience.",
+    ],
+  },
+  {
+    company: "SuitePad GmbH",
+    role: "Product Engineer (Frontend)",
+    location: "Berlin, Germany",
+    duration: "Jan 2025 -- Apr 2026",
+    details: [
+      "Frontend product engineer building and shipping features across SuitePad's product.",
+    ],
+  },
+  {
     company: "Ravka Consult",
-    role: "Senior Product Engineer",
+    role: "Senior Product Engineer (Consulting)",
     location: "Rotterdam, NL",
     duration: "Jan 2024 -- Jul 2025",
     details: [

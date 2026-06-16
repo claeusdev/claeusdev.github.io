@@ -67,9 +67,9 @@ With environments, our small-step transition relation becomes `⟨e, ρ⟩ → �
 
 ### Variable Lookup
 
-```
-⟨x, ρ⟩ → ⟨v, ρ⟩   where ρ(x) = v
-```
+$$
+\langle x, \rho \rangle \to \langle v, \rho \rangle \qquad \text{where } \rho(x) = v
+$$
 
 This rule says: A variable reference evaluates to the value it's bound to in the current environment.
 
@@ -77,40 +77,41 @@ This rule says: A variable reference evaluates to the value it's bound to in the
 
 The rules for arithmetic are similar to before, but now include the environment:
 
-```
-⟨n₁ + n₂, ρ⟩ → ⟨n₃, ρ⟩      where n₃ = n₁ + n₂
-⟨n₁ - n₂, ρ⟩ → ⟨n₃, ρ⟩      where n₃ = n₁ - n₂
-⟨n₁ * n₂, ρ⟩ → ⟨n₃, ρ⟩      where n₃ = n₁ * n₂
-⟨n₁ / n₂, ρ⟩ → ⟨n₃, ρ⟩      where n₃ = n₁ / n₂ and n₂ ≠ 0
-```
+$$
+\begin{aligned}
+\langle n_1 + n_2, \rho \rangle &\to \langle n_3, \rho \rangle &&\text{where } n_3 = n_1 + n_2\\
+\langle n_1 - n_2, \rho \rangle &\to \langle n_3, \rho \rangle &&\text{where } n_3 = n_1 - n_2\\
+\langle n_1 \times n_2, \rho \rangle &\to \langle n_3, \rho \rangle &&\text{where } n_3 = n_1 \times n_2\\
+\langle n_1 / n_2, \rho \rangle &\to \langle n_3, \rho \rangle &&\text{where } n_3 = n_1 / n_2,\ n_2 \neq 0
+\end{aligned}
+$$
 
 ### Evaluation Context Rules for Arithmetic
 
 The context rules also include environments:
 
-```
-⟨e₁, ρ⟩ → ⟨e₁', ρ⟩
---------------------------
-⟨e₁ + e₂, ρ⟩ → ⟨e₁' + e₂, ρ⟩
+$$
+\frac{\langle e_1, \rho \rangle \to \langle e_1', \rho \rangle}{\langle e_1 + e_2, \rho \rangle \to \langle e_1' + e_2, \rho \rangle}
+$$
 
-⟨e₂, ρ⟩ → ⟨e₂', ρ⟩
---------------------------
-⟨v₁ + e₂, ρ⟩ → ⟨v₁ + e₂', ρ⟩
-```
+$$
+\frac{\langle e_2, \rho \rangle \to \langle e_2', \rho \rangle}{\langle v_1 + e_2, \rho \rangle \to \langle v_1 + e_2', \rho \rangle}
+$$
 
 Similar rules apply for subtraction, multiplication, and division.
 
 ### Conditional Expressions
 
-```
-⟨e₁, ρ⟩ → ⟨e₁', ρ⟩
-----------------------------------------------------
-⟨if e₁ then e₂ else e₃, ρ⟩ → ⟨if e₁' then e₂ else e₃, ρ⟩
+$$
+\frac{\langle e_1, \rho \rangle \to \langle e_1', \rho \rangle}{\langle \text{if } e_1 \text{ then } e_2 \text{ else } e_3, \rho \rangle \to \langle \text{if } e_1' \text{ then } e_2 \text{ else } e_3, \rho \rangle}
+$$
 
-⟨if 0 then e₂ else e₃, ρ⟩ → ⟨e₃, ρ⟩      (False case: 0 is false)
-
-⟨if n then e₂ else e₃, ρ⟩ → ⟨e₂, ρ⟩       (True case: any non-zero is true)
-```
+$$
+\begin{aligned}
+\langle \text{if } 0 \text{ then } e_2 \text{ else } e_3, \rho \rangle &\to \langle e_3, \rho \rangle &&\text{(false: 0)}\\
+\langle \text{if } n \text{ then } e_2 \text{ else } e_3, \rho \rangle &\to \langle e_2, \rho \rangle &&\text{(true: } n \neq 0\text{)}
+\end{aligned}
+$$
 
 These rules say:
 
@@ -122,23 +123,21 @@ These rules say:
 
 A lambda expression (function) is already a value, so it doesn't reduce further:
 
-```
-⟨λx.e, ρ⟩ → ⟨λx.e, ρ⟩
-```
+$$
+\langle \lambda x.e, \rho \rangle \to \langle \lambda x.e, \rho \rangle
+$$
 
 However, we need rules for function application:
 
-```
-⟨e₁, ρ⟩ → ⟨e₁', ρ⟩
---------------------------
-⟨e₁ e₂, ρ⟩ → ⟨e₁' e₂, ρ⟩
+$$
+\frac{\langle e_1, \rho \rangle \to \langle e_1', \rho \rangle}{\langle e_1\, e_2, \rho \rangle \to \langle e_1'\, e_2, \rho \rangle}
+\qquad
+\frac{\langle e_2, \rho \rangle \to \langle e_2', \rho \rangle}{\langle v_1\, e_2, \rho \rangle \to \langle v_1\, e_2', \rho \rangle}
+$$
 
-⟨e₂, ρ⟩ → ⟨e₂', ρ⟩
---------------------------
-⟨v₁ e₂, ρ⟩ → ⟨v₁ e₂', ρ⟩
-
-⟨(λx.e) v, ρ⟩ → ⟨e, ρ[x ↦ v]⟩
-```
+$$
+\langle (\lambda x.e)\, v, \rho \rangle \to \langle e, \rho[x \mapsto v] \rangle
+$$
 
 The first two rules are evaluation context rules that ensure we evaluate the function and argument expressions. The third rule is the crucial one for function application: when a function (λx.e) is applied to a value v, we evaluate the function body e in an environment extended with a binding from the parameter x to the argument value v.
 
@@ -175,49 +174,44 @@ For big-step semantics with our extended language, our relation is `⟨e, ρ⟩ 
 
 ### Constants and Variables
 
-```
-⟨n, ρ⟩ ⇓ n
-
-⟨x, ρ⟩ ⇓ v   where ρ(x) = v
-```
+$$
+\langle n, \rho \rangle \Downarrow n
+\qquad\qquad
+\langle x, \rho \rangle \Downarrow v \quad \text{where } \rho(x) = v
+$$
 
 ### Arithmetic Operations
 
-```
-⟨e₁, ρ⟩ ⇓ n₁    ⟨e₂, ρ⟩ ⇓ n₂
--------------------------------
-     ⟨e₁ + e₂, ρ⟩ ⇓ n₃
-```
+$$
+\frac{\langle e_1, \rho \rangle \Downarrow n_1 \quad \langle e_2, \rho \rangle \Downarrow n_2}{\langle e_1 + e_2, \rho \rangle \Downarrow n_3}
+\qquad (n_3 = n_1 + n_2)
+$$
 
-where n₃ = n₁ + n₂ (similar rules for -, \*, /)
+Similar rules apply for subtraction, multiplication, and division.
 
 ### Conditional Expressions
 
-```
-⟨e₁, ρ⟩ ⇓ 0    ⟨e₃, ρ⟩ ⇓ v
--------------------------------
-⟨if e₁ then e₂ else e₃, ρ⟩ ⇓ v
+$$
+\frac{\langle e_1, \rho \rangle \Downarrow 0 \quad \langle e_3, \rho \rangle \Downarrow v}{\langle \text{if } e_1 \text{ then } e_2 \text{ else } e_3, \rho \rangle \Downarrow v}
+$$
 
-⟨e₁, ρ⟩ ⇓ n    ⟨e₂, ρ⟩ ⇓ v    n ≠ 0
--------------------------------------
-⟨if e₁ then e₂ else e₃, ρ⟩ ⇓ v
-```
+$$
+\frac{\langle e_1, \rho \rangle \Downarrow n \quad \langle e_2, \rho \rangle \Downarrow v \quad n \neq 0}{\langle \text{if } e_1 \text{ then } e_2 \text{ else } e_3, \rho \rangle \Downarrow v}
+$$
 
 ### Functions
 
-```
-⟨λx.e, ρ⟩ ⇓ ⟨λx.e, ρ⟩
-```
+$$
+\langle \lambda x.e, \rho \rangle \Downarrow \langle \lambda x.e, \rho \rangle
+$$
 
 In big-step semantics, a function evaluates to a closure, which captures both the function and its defining environment.
 
 ### Function Application
 
-```
-⟨e₁, ρ⟩ ⇓ ⟨λx.e, ρ'⟩    ⟨e₂, ρ⟩ ⇓ v₂    ⟨e, ρ'[x ↦ v₂]⟩ ⇓ v
--------------------------------------------------------------
-                     ⟨e₁ e₂, ρ⟩ ⇓ v
-```
+$$
+\frac{\langle e_1, \rho \rangle \Downarrow \langle \lambda x.e, \rho' \rangle \quad \langle e_2, \rho \rangle \Downarrow v_2 \quad \langle e, \rho'[x \mapsto v_2] \rangle \Downarrow v}{\langle e_1\, e_2, \rho \rangle \Downarrow v}
+$$
 
 This rule says: To evaluate a function application e₁ e₂,
 
@@ -229,19 +223,15 @@ This rule says: To evaluate a function application e₁ e₂,
 
 Here's how we would derive the evaluation of `(λx. x + 1) 5` using big-step semantics:
 
-```
-⟨λx. x + 1, ρ⟩ ⇓ ⟨λx. x + 1, ρ⟩    ⟨5, ρ⟩ ⇓ 5    ⟨x + 1, ρ[x ↦ 5]⟩ ⇓ 6
------------------------------------------------------------------------
-                       ⟨(λx. x + 1) 5, ρ⟩ ⇓ 6
-```
+$$
+\frac{\langle \lambda x.\, x + 1, \rho \rangle \Downarrow \langle \lambda x.\, x + 1, \rho \rangle \quad \langle 5, \rho \rangle \Downarrow 5 \quad \langle x + 1, \rho[x \mapsto 5] \rangle \Downarrow 6}{\langle (\lambda x.\, x + 1)\, 5, \rho \rangle \Downarrow 6}
+$$
 
 Where `⟨x + 1, ρ[x ↦ 5]⟩ ⇓ 6` would be derived as:
 
-```
-⟨x, ρ[x ↦ 5]⟩ ⇓ 5    ⟨1, ρ[x ↦ 5]⟩ ⇓ 1
--------------------------------------
-        ⟨x + 1, ρ[x ↦ 5]⟩ ⇓ 6
-```
+$$
+\frac{\langle x, \rho[x \mapsto 5] \rangle \Downarrow 5 \quad \langle 1, \rho[x \mapsto 5] \rangle \Downarrow 1}{\langle x + 1, \rho[x \mapsto 5] \rangle \Downarrow 6}
+$$
 
 ## Lexical vs. Dynamic Scoping
 

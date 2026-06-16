@@ -4,11 +4,11 @@ description: "Discover how to apply the Strangler Fig Pattern from software arch
 date: 2025-12-28
 author: "Nana Adjei Manu"
 categories: "growth"
-image: "/strangler-fig-learning.png"
+image: "/strangler-fig-learning.webp"
 tags: ["Career Development", "Learning", "Personal Growth"]
 ---
 
-![Strangler Fig Pattern Learning Header](/strangler-fig-learning.png)
+![Strangler Fig Pattern Learning Header](/strangler-fig-learning.webp)
 
 We often treat learning a new skill or changing careers like a "Big Bang rewrite". You remove the entire existing system and try to build a shiny new one from scratch. It almost always fails. It takes too long, costs too much, and it's incredibly risky.
 

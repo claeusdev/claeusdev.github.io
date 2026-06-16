@@ -2,20 +2,41 @@
 import { type CollectionEntry, getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ViewCounter from "../../components/ViewCounter.astro";
+import TableOfContents from "../../components/TableOfContents.astro";
 import { AUTHOR } from "../../consts";
 
+type Neighbor = { slug: string; title: string } | null;
+
 export async function getStaticPaths() {
-  const essays = await getCollection("essays");
-  return essays.map((essay) => ({
-    params: { slug: essay.slug },
-    props: essay,
-  }));
+  const essays = (await getCollection("essays")).sort(
+    (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+  );
+  const published = essays.filter((e) => !e.data.draft);
+  const toLink = (e: CollectionEntry<"essays"> | undefined): Neighbor =>
+    e ? { slug: e.slug, title: e.data.title } : null;
+
+  return essays.map((essay) => {
+    const idx = published.findIndex((e) => e.slug === essay.slug);
+    const newer = idx > 0 ? toLink(published[idx - 1]) : null;
+    const older =
+      idx >= 0 && idx < published.length - 1
+        ? toLink(published[idx + 1])
+        : null;
+    return {
+      params: { slug: essay.slug },
+      props: { essay, newer, older },
+    };
+  });
 }
 
-type Props = CollectionEntry<"essays">;
+type Props = {
+  essay: CollectionEntry<"essays">;
+  newer: Neighbor;
+  older: Neighbor;
+};
 
-const essay = Astro.props;
-const { Content } = await essay.render();
+const { essay, newer, older } = Astro.props;
+const { Content, headings } = await essay.render();
 
 function formatDate(date: Date): string {
   return date.toLocaleDateString("en-US", {
@@ -32,15 +53,31 @@ const readingTime = Math.ceil(words / 200);
 // Get author and tags
 const author = essay.data.author || AUTHOR;
 const tags = essay.data.tags || [];
+
+const canonicalURL = new URL(`/essays/${essay.slug}/`, Astro.site).href;
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: essay.data.title,
+  description: essay.data.description,
+  datePublished: essay.data.date.toISOString(),
+  author: { "@type": "Person", name: author },
+  mainEntityOfPage: canonicalURL,
+  ...(essay.data.image
+    ? { image: new URL(essay.data.image, Astro.site).href }
+    : {}),
+};
 ---
 
 <BaseLayout
   title={essay.data.title}
   description={essay.data.description}
   image={essay.data.image}
+  type="article"
+  jsonLd={jsonLd}
 >
   <div class="container">
-    <article>
+    <article data-pagefind-body>
       <header class="essay-header">
         <h1 class="essay-title">{essay.data.title}</h1>
         {
@@ -70,12 +107,35 @@ const tags = essay.data.tags || [];
         }
       </header>
 
+      <TableOfContents headings={headings} />
+
       <div class="essay-content">
         <Content />
       </div>
     </article>
 
     <hr />
+
+    {
+      (newer || older) && (
+        <nav class="essay-neighbors" aria-label="More essays">
+          {older ? (
+            <a href={`/essays/${older.slug}/`} class="neighbor neighbor-prev">
+              <span class="neighbor-dir">← Older</span>
+              <span class="neighbor-title">{older.title}</span>
+            </a>
+          ) : (
+            <span />
+          )}
+          {newer && (
+            <a href={`/essays/${newer.slug}/`} class="neighbor neighbor-next">
+              <span class="neighbor-dir">Newer →</span>
+              <span class="neighbor-title">{newer.title}</span>
+            </a>
+          )}
+        </nav>
+      )
+    }
 
     <nav class="essay-nav">
       <a href="/essays" class="section-link">← Back to all essays</a>
@@ -151,5 +211,54 @@ const tags = essay.data.tags || [];
 
   .essay-nav {
     padding: var(--space-xl) 0;
+  }
+
+  .essay-neighbors {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+    padding: var(--space-lg) 0;
+  }
+
+  .neighbor {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding: var(--space-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s ease;
+  }
+
+  .neighbor:hover {
+    border-color: var(--color-accent);
+  }
+
+  .neighbor-next {
+    text-align: right;
+  }
+
+  .neighbor-dir {
+    font-size: var(--text-xs);
+    font-family: var(--font-mono);
+    color: var(--color-text-muted);
+  }
+
+  .neighbor-title {
+    font-size: var(--text-base);
+    font-weight: 500;
+    color: var(--color-text);
+  }
+
+  @media (max-width: 640px) {
+    .essay-neighbors {
+      grid-template-columns: 1fr;
+    }
+
+    .neighbor-next {
+      text-align: left;
+    }
   }
 </style>

@@ -2,20 +2,43 @@
 import { type CollectionEntry, getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ViewCounter from "../../components/ViewCounter.astro";
+import TableOfContents from "../../components/TableOfContents.astro";
 import { AUTHOR } from "../../consts";
+import { tagSlug } from "../../lib/tags";
+
+type Neighbor = { slug: string; title: string } | null;
 
 export async function getStaticPaths() {
-  const posts = await getCollection("posts");
-  return posts.map((post) => ({
-    params: { slug: post.slug },
-    props: post,
-  }));
+  const posts = (await getCollection("posts")).sort(
+    (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+  );
+  const published = posts.filter((p) => !p.data.draft);
+  const toLink = (p: CollectionEntry<"posts"> | undefined): Neighbor =>
+    p ? { slug: p.slug, title: p.data.title } : null;
+
+  return posts.map((post) => {
+    const idx = published.findIndex((p) => p.slug === post.slug);
+    // List is newest-first: newer = previous index, older = next index.
+    const newer = idx > 0 ? toLink(published[idx - 1]) : null;
+    const older =
+      idx >= 0 && idx < published.length - 1
+        ? toLink(published[idx + 1])
+        : null;
+    return {
+      params: { slug: post.slug },
+      props: { post, newer, older },
+    };
+  });
 }
 
-type Props = CollectionEntry<"posts">;
+type Props = {
+  post: CollectionEntry<"posts">;
+  newer: Neighbor;
+  older: Neighbor;
+};
 
-const post = Astro.props;
-const { Content } = await post.render();
+const { post, newer, older } = Astro.props;
+const { Content, headings } = await post.render();
 
 function formatDate(date: Date): string {
   return date.toLocaleDateString("en-US", {
@@ -32,15 +55,31 @@ const readingTime = Math.ceil(words / 200);
 // Get author and tags
 const author = post.data.author || AUTHOR;
 const tags = post.data.tags || [];
+
+const canonicalURL = new URL(`/posts/${post.slug}/`, Astro.site).href;
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.date.toISOString(),
+  author: { "@type": "Person", name: author },
+  mainEntityOfPage: canonicalURL,
+  ...(post.data.image
+    ? { image: new URL(post.data.image, Astro.site).href }
+    : {}),
+};
 ---
 
 <BaseLayout
   title={post.data.title}
   description={post.data.description}
   image={post.data.image}
+  type="article"
+  jsonLd={jsonLd}
 >
   <div class="container">
-    <article>
+    <article data-pagefind-body>
       <header class="post-header">
         <h1 class="post-title">{post.data.title}</h1>
         <p class="post-meta">
@@ -58,12 +97,16 @@ const tags = post.data.tags || [];
           tags.length > 0 && (
             <div class="post-tags">
               {tags.map((tag: string) => (
-                <span class="tag">{tag}</span>
+                <a class="tag" href={`/tags/${tagSlug(tag)}/`}>
+                  {tag}
+                </a>
               ))}
             </div>
           )
         }
       </header>
+
+      <TableOfContents headings={headings} />
 
       <div class="post-content">
         <Content />
@@ -71,6 +114,27 @@ const tags = post.data.tags || [];
     </article>
 
     <hr />
+
+    {
+      (newer || older) && (
+        <nav class="post-neighbors" aria-label="More posts">
+          {older ? (
+            <a href={`/posts/${older.slug}/`} class="neighbor neighbor-prev">
+              <span class="neighbor-dir">← Older</span>
+              <span class="neighbor-title">{older.title}</span>
+            </a>
+          ) : (
+            <span />
+          )}
+          {newer && (
+            <a href={`/posts/${newer.slug}/`} class="neighbor neighbor-next">
+              <span class="neighbor-dir">Newer →</span>
+              <span class="neighbor-title">{newer.title}</span>
+            </a>
+          )}
+        </nav>
+      )
+    }
 
     <nav class="post-nav">
       <a href="/posts" class="section-link">← Back to all posts</a>
@@ -81,6 +145,55 @@ const tags = post.data.tags || [];
 <style>
   .post-nav {
     padding: var(--space-xl) 0;
+  }
+
+  .post-neighbors {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+    padding: var(--space-lg) 0;
+  }
+
+  .neighbor {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding: var(--space-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s ease;
+  }
+
+  .neighbor:hover {
+    border-color: var(--color-accent);
+  }
+
+  .neighbor-next {
+    text-align: right;
+  }
+
+  .neighbor-dir {
+    font-size: var(--text-xs);
+    font-family: var(--font-mono);
+    color: var(--color-text-muted);
+  }
+
+  .neighbor-title {
+    font-size: var(--text-base);
+    font-weight: 500;
+    color: var(--color-text);
+  }
+
+  @media (max-width: 640px) {
+    .post-neighbors {
+      grid-template-columns: 1fr;
+    }
+
+    .neighbor-next {
+      text-align: left;
+    }
   }
 
   .post-author {
@@ -103,11 +216,12 @@ const tags = post.data.tags || [];
     padding: var(--space-xs) var(--space-sm);
     border-radius: var(--radius-sm);
     color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: border-color 0.2s ease, color 0.2s ease;
   }
-</style>
 
-<style>
-  .post-nav {
-    padding: var(--space-xl) 0;
+  a.tag:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
   }
 </style>

@@ -111,17 +111,7 @@ const years = Object.keys(essaysByYear)
     background: var(--color-bg-secondary);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
-    opacity: 0;
-    transform: translateY(20px);
-    transition:
-      opacity 0.6s ease-out,
-      transform 0.6s ease-out,
-      border-color 0.2s ease;
-  }
-
-  .essay-item.animate-in {
-    opacity: 1;
-    transform: translateY(0);
+    transition: border-color 0.2s ease;
   }
 
   .essay-item:hover {

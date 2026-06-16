@@ -1,0 +1,48 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Search from "astro-pagefind/components/Search.astro";
+---
+
+<BaseLayout
+  title="Search"
+  description="Search posts, essays, and research."
+>
+  <div class="container">
+    <section class="hero" style="padding-bottom: var(--space-lg);">
+      <h1 class="hero-title">Search</h1>
+      <p class="hero-subtitle">Find posts, essays, and research.</p>
+    </section>
+
+    <Search
+      id="search"
+      className="pagefind-ui"
+      uiOptions={{ showImages: false, excerptLength: 20 }}
+    />
+
+    <p class="search-note">
+      Search runs against the built site, so it works in production and
+      <code>astro preview</code> — not in <code>astro dev</code>.
+    </p>
+  </div>
+</BaseLayout>
+
+<style is:global>
+  /* Match Pagefind UI to the site's design tokens */
+  .pagefind-ui {
+    --pagefind-ui-primary: var(--color-accent);
+    --pagefind-ui-text: var(--color-text);
+    --pagefind-ui-background: var(--color-bg);
+    --pagefind-ui-border: var(--color-border);
+    --pagefind-ui-tag: var(--color-bg-secondary);
+    --pagefind-ui-border-radius: var(--radius-md);
+    --pagefind-ui-font: var(--font-body);
+  }
+</style>
+
+<style>
+  .search-note {
+    margin-top: var(--space-xl);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+</style>
