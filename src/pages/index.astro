@@ -11,6 +11,9 @@ import {
   SITE_DESCRIPTION,
 } from "../consts";
 
+// Show a curated handful of projects on the homepage.
+const featuredProjects = PROJECTS.slice(0, 6);
+
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
@@ -53,6 +56,8 @@ function formatDate(date: Date): string {
     <section class="bio-section">
       <div class="bio-content">
         <div class="bio-text">
+          <p class="eyebrow">Software Engineer · Independent Researcher</p>
+          <h1 class="bio-name">{AUTHOR}</h1>
           <p>
             I'm a software engineer and independent researcher focused on how
             programs are specified, reasoned about, and made reliable through
@@ -94,34 +99,36 @@ function formatDate(date: Date): string {
 
     <!-- Open Source Projects -->
     <section class="section">
-      <h2>Open Source Projects</h2>
-      <p>
-        I build tools and libraries across programming languages, systems, and
-        tooling. All projects can be found on
-        <a href={`https://github.com/${GITHUB_USERNAME}`}>my GitHub page</a>.
-        Some of my projects include:
+      <h2>Open Source</h2>
+      <p class="section-lede">
+        Tools and libraries across programming languages, systems, and tooling.
+        More on <a href={`https://github.com/${GITHUB_USERNAME}`}>GitHub</a>.
       </p>
-      <ul class="project-bullets">
+      <div class="project-grid">
         {
-          PROJECTS.map((project) => (
-            <li>
-              <div>
-                <a href={project.url} target="_blank" rel="noopener">
-                  <strong>{project.name}</strong>
-                </a>{" "}
-                - {project.description}
-              </div>
+          featuredProjects.map((project) => (
+            <a
+              href={project.url}
+              target="_blank"
+              rel="noopener"
+              class="project-card"
+            >
+              <span class="project-card-name">{project.name}</span>
+              <span class="project-card-desc">{project.description}</span>
               {project.tags && (
-                <div class="tag-list">
+                <span class="tag-list">
                   {project.tags.map((tag) => (
                     <span class="tag">{tag}</span>
                   ))}
-                </div>
+                </span>
               )}
-            </li>
+            </a>
           ))
         }
-      </ul>
+      </div>
+      <p class="section-more">
+        <a href="/projects">All projects →</a>
+      </p>
     </section>
 
     <!-- Selected Publications -->
@@ -151,19 +158,21 @@ function formatDate(date: Date): string {
     <!-- Recent Blog Posts -->
     <section class="section">
       <h2>Recent Posts</h2>
-      <ul class="post-bullets">
+      <div class="post-list">
         {
           posts.map((post) => (
-            <li>
-              <a href={`/posts/${post.slug}/`}>{post.data.title}</a>
-              <span class="post-date-inline">
-                , {formatDate(post.data.date)}
-              </span>
-            </li>
+            <article class="post-item">
+              <a href={`/posts/${post.slug}/`} class="post-link">
+                {post.data.title}
+              </a>
+              <time class="post-date" datetime={post.data.date.toISOString()}>
+                {formatDate(post.data.date)}
+              </time>
+            </article>
           ))
         }
-      </ul>
-      <p>
+      </div>
+      <p class="section-more">
         <a href="/posts">All posts →</a>
       </p>
     </section>
@@ -172,7 +181,7 @@ function formatDate(date: Date): string {
 
 <style>
   .bio-section {
-    margin-bottom: var(--space-xl);
+    margin-bottom: var(--space-2xl);
   }
 
   .bio-content {
@@ -185,52 +194,84 @@ function formatDate(date: Date): string {
     flex: 1;
   }
 
+  .bio-name {
+    font-size: var(--text-4xl);
+    margin: 0 0 var(--space-md);
+    line-height: 1.1;
+  }
+
   .bio-photo {
-    width: 160px;
-    height: 160px;
-    min-width: 160px;
+    width: 150px;
+    height: 150px;
+    min-width: 150px;
     object-fit: cover;
     flex-shrink: 0;
-    border-radius: 6px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
   }
 
-  .project-bullets {
-    margin: var(--space-sm) 0 var(--space-md);
-    padding-left: 2rem;
+  .section-lede {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-lg);
   }
 
-  .project-bullets li {
-    margin-bottom: var(--space-sm);
-  }
-
-  .project-bullets a {
-    color: var(--color-link);
-  }
-
-  .post-bullets {
-    margin: var(--space-sm) 0 var(--space-md);
-    padding-left: 2rem;
-    list-style: disc;
-  }
-
-  .post-bullets li {
-    margin-bottom: var(--space-xs);
-  }
-
-  .post-date-inline {
-    color: var(--color-text-muted);
+  .section-more {
+    margin-top: var(--space-lg);
+    font-family: var(--font-sans);
     font-size: var(--text-sm);
+  }
+
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+  }
+
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding: var(--space-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color var(--transition), background var(--transition);
+  }
+
+  .project-card:hover {
+    border-color: var(--color-accent);
+    background: var(--color-accent-light);
+    text-decoration: none;
+  }
+
+  .project-card-name {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .project-card-desc {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    flex: 1;
   }
 
   @media (max-width: 640px) {
     .bio-content {
-      flex-direction: column;
+      flex-direction: column-reverse;
+      align-items: flex-start;
     }
 
     .bio-photo {
-      width: 120px;
-      height: 120px;
+      width: 110px;
+      height: 110px;
+      min-width: 110px;
+    }
+
+    .project-grid {
+      grid-template-columns: 1fr;
     }
   }
 </style>
