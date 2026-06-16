@@ -4,11 +4,11 @@ description: "How I added a simple, privacy-friendly view counter to my static A
 date: 2026-01-03
 author: "Nana Adjei Manu"
 categories: "engineering"
-image: "/view-counter-supabase.png"
+image: "/view-counter-supabase.webp"
 tags: ["Astro", "Supabase", "Static Sites", "Tutorial"]
 ---
 
-![Building a View Counter with Supabase](/view-counter-supabase.png)
+![Building a View Counter with Supabase](/view-counter-supabase.webp)
 
 Static sites can't count views. That's the whole point — they're static.
 

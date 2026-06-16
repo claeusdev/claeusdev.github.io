@@ -69,28 +69,26 @@ We write `e → e'` to indicate that expression `e` reduces to expression `e'` i
 
 These rules define how to compute results when both operands are already values (numbers):
 
-```
-n₁ + n₂ → n₃    (where n₃ is the mathematical sum of n₁ and n₂)
-n₁ - n₂ → n₃    (where n₃ is the mathematical difference of n₁ and n₂)
-n₁ * n₂ → n₃    (where n₃ is the mathematical product of n₁ and n₂)
-n₁ / n₂ → n₃    (where n₃ is the mathematical quotient of n₁ and n₂, and n₂ ≠ 0)
-```
+$$
+\begin{aligned}
+n_1 + n_2 &\to n_3 &&\text{where } n_3 = n_1 + n_2\\
+n_1 - n_2 &\to n_3 &&\text{where } n_3 = n_1 - n_2\\
+n_1 \times n_2 &\to n_3 &&\text{where } n_3 = n_1 \times n_2\\
+n_1 / n_2 &\to n_3 &&\text{where } n_3 = n_1 / n_2,\ n_2 \neq 0
+\end{aligned}
+$$
 
 ### Evaluation Context Rules
 
 These rules define how to make progress when operands need further evaluation:
 
-```
-e₁ → e₁'
----------------
-e₁ + e₂ → e₁' + e₂
-```
+$$
+\frac{e_1 \to e_1'}{e_1 + e_2 \to e_1' + e_2}
+$$
 
-```
-e₂ → e₂'
----------------
-n₁ + e₂ → n₁ + e₂'
-```
+$$
+\frac{e_2 \to e_2'}{n_1 + e_2 \to n_1 + e_2'}
+$$
 
 Similar rules apply for subtraction, multiplication, and division.
 
@@ -131,21 +129,18 @@ For our arithmetic language, the rules are:
 
 ### Constants
 
-```
-n ⇓ n
-```
+$$
+n \Downarrow n
+$$
 
 A number evaluates to itself.
 
 ### Addition
 
-```
-e₁ ⇓ n₁    e₂ ⇓ n₂
---------------------
-  e₁ + e₂ ⇓ n₃
-```
-
-where n₃ = n₁ + n₂
+$$
+\frac{e_1 \Downarrow n_1 \quad e_2 \Downarrow n_2}{e_1 + e_2 \Downarrow n_3}
+\qquad (n_3 = n_1 + n_2)
+$$
 
 This rule says: To evaluate e₁ + e₂, first evaluate e₁ to get value n₁, then evaluate e₂ to get value n₂, then compute n₁ + n₂ to get the final result n₃.
 
@@ -155,13 +150,13 @@ Similar rules apply for subtraction, multiplication, and division.
 
 For `(1 + 2) * (3 + 4)`, the big-step derivation looks like:
 
-```
-1 ⇓ 1   2 ⇓ 2          3 ⇓ 3   4 ⇓ 4
------------              ---------
-(1 + 2) ⇓ 3            (3 + 4) ⇓ 7
------------------------------------
-     (1 + 2) * (3 + 4) ⇓ 21
-```
+$$
+\frac{
+  \dfrac{1 \Downarrow 1 \quad 2 \Downarrow 2}{(1 + 2) \Downarrow 3}
+  \qquad
+  \dfrac{3 \Downarrow 3 \quad 4 \Downarrow 4}{(3 + 4) \Downarrow 7}
+}{(1 + 2) \times (3 + 4) \Downarrow 21}
+$$
 
 This tree-structured derivation shows how we evaluate the entire expression by evaluating its subparts.
 

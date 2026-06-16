@@ -4,11 +4,11 @@ description: "How to achieve nominal typing in TypeScript with branded types, pr
 date: 2026-01-06
 author: "Nana Adjei Manu"
 categories: "engineering"
-image: "/branded-types-typescript.png"
+image: "/branded-types-typescript.webp"
 tags: ["TypeScript", "Type System", "Type Safety", "Programming Languages"]
 ---
 
-![Branded Types in TypeScript](/branded-types-typescript.png)
+![Branded Types in TypeScript](/branded-types-typescript.webp)
 
 You've just shipped a critical bug to production. A user's bank account was debited in euros, but credited in dollars. The amounts matched perfectly — `100` is `100` after all but your currency conversion logic silently failed. TypeScript didn't catch it. Your tests didn't catch it. The code compiled without a warning.
 

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import Subscribe from "../../components/Subscribe.astro";
 import { getCollection } from "astro:content";
 
 const posts = (await getCollection("posts"))
@@ -64,6 +65,8 @@ const years = Object.keys(postsByYear)
         </section>
       ))
     }
+
+    <Subscribe />
   </div>
 </BaseLayout>
 

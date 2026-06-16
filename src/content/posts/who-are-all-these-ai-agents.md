@@ -4,11 +4,11 @@ description: "Explore how AI agents differ from traditional decision-tree chatbo
 date: 2025-12-25
 author: "Nana Adjei Manu"
 categories: "ai"
-image: "/ai-agents.png"
+image: "/ai-agents.webp"
 tags: ["AI", "LLM", "Agents", "Customer Support", "Automation"]
 ---
 
-![AI Agents Header](/ai-agents.png)
+![AI Agents Header](/ai-agents.webp)
 
 **From Simple Scripts to Autonomous Thinkers**
 

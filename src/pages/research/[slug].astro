@@ -43,15 +43,37 @@ const readingTime = Math.ceil(words / 200);
 const author = paper.data.author || AUTHOR;
 const tags = paper.data.tags || [];
 const status = getStatusBadge(paper.data.publicationStatus);
+
+const canonicalURL = new URL(`/research/${paper.slug}/`, Astro.site).href;
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ScholarlyArticle",
+  headline: paper.data.title,
+  description: paper.data.abstract || paper.data.description,
+  datePublished: paper.data.date.toISOString(),
+  author: [
+    { "@type": "Person", name: author },
+    ...(paper.data.coAuthors || []).map((name: string) => ({
+      "@type": "Person",
+      name,
+    })),
+  ],
+  mainEntityOfPage: canonicalURL,
+  ...(paper.data.image
+    ? { image: new URL(paper.data.image, Astro.site).href }
+    : {}),
+};
 ---
 
 <BaseLayout
   title={paper.data.title}
   description={paper.data.abstract || paper.data.description}
   image={paper.data.image}
+  type="article"
+  jsonLd={jsonLd}
 >
   <div class="container">
-    <article>
+    <article data-pagefind-body>
       <header class="paper-header">
         <span class={`status-badge ${status.class}`}>{status.label}</span>
 
@@ -169,23 +191,23 @@ const status = getStatusBadge(paper.data.publicationStatus);
   }
 
   .status-draft {
-    background: rgba(156, 163, 175, 0.2);
+    background: rgba(156, 163, 175, 0.15);
     color: var(--color-text-secondary);
   }
 
   .status-preprint {
-    background: rgba(139, 92, 246, 0.2);
-    color: #a78bfa;
+    background: rgba(124, 58, 237, 0.12);
+    color: #7c3aed;
   }
 
   .status-review {
-    background: rgba(251, 191, 36, 0.2);
-    color: #fbbf24;
+    background: rgba(217, 119, 6, 0.12);
+    color: #d97706;
   }
 
   .status-published {
-    background: rgba(34, 197, 94, 0.2);
-    color: #22c55e;
+    background: rgba(22, 163, 74, 0.12);
+    color: #16a34a;
   }
 
   .paper-title {

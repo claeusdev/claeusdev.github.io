@@ -4,7 +4,7 @@ description: "Explore the complementary roles of divergent and convergent thinki
 date: 2026-01-20
 author: "Nana Adjei Manu"
 categories: "research"
-image: "/two-modes-thinking.png"
+image: "/two-modes-thinking.webp"
 tags: ["Research", "Creativity", "Problem Solving", "Cognitive Science"]
 ---
 
