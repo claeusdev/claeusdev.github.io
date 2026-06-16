@@ -151,24 +151,3 @@ export const EXPERIENCE = [
     ],
   },
 ];
-
-export const PUBLICATIONS = [
-  {
-    title: "Operational Semantics for Distributed Functional Programming",
-    authors: "Nana Adjei Manu, A. Researcher",
-    venue: "ICFP 2025 (Under Review)",
-    year: 2025,
-    url: "#",
-    code: "#",
-    abstract:
-      "We present a new operational semantics for distributed functional programming languages that simplifies reasoning about concurrency and failure.",
-  },
-  {
-    title: "Type-Safe Distributed Actors",
-    authors: "Nana Adjei Manu",
-    venue: "PLDI 2024 Student Research Competition",
-    year: 2024,
-    url: "#",
-    code: "#",
-  },
-];

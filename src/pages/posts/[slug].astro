@@ -74,7 +74,7 @@ const jsonLd = {
 <BaseLayout
   title={post.data.title}
   description={post.data.description}
-  image={post.data.image}
+  image={`/og/posts/${post.slug}.png`}
   type="article"
   jsonLd={jsonLd}
 >

@@ -4,6 +4,8 @@ import sitemap from "@astrojs/sitemap";
 import pagefind from "astro-pagefind";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
+import rehypeSlug from "rehype-slug";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
 
 /**
  * Lazy-load and async-decode all images rendered from markdown content.
@@ -41,6 +43,18 @@ export default defineConfig({
       wrap: true,
     },
     remarkPlugins: [remarkMath],
-    rehypePlugins: [rehypeLazyImages, rehypeKatex],
+    rehypePlugins: [
+      rehypeLazyImages,
+      rehypeKatex,
+      rehypeSlug,
+      [
+        rehypeAutolinkHeadings,
+        {
+          behavior: "append",
+          properties: { className: ["heading-anchor"], ariaHidden: true, tabIndex: -1 },
+          content: { type: "text", value: "#" },
+        },
+      ],
+    ],
   },
 });
