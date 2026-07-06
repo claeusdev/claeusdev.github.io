@@ -14,13 +14,12 @@ const [hasResearch, hasEssays] = await Promise.all([
 ]);
 
 const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  ...(hasResearch ? [{ href: "/research", label: "Research" }] : []),
-  { href: "/posts", label: "Blog" },
-  ...(hasEssays ? [{ href: "/essays", label: "Essays" }] : []),
-  { href: "/projects", label: "Projects" },
-  { href: "/experience", label: "CV" },
+  { href: "/about", label: "about" },
+  ...(hasResearch ? [{ href: "/research", label: "research" }] : []),
+  { href: "/posts", label: "writing" },
+  ...(hasEssays ? [{ href: "/essays", label: "essays" }] : []),
+  { href: "/projects", label: "projects" },
+  { href: "/experience", label: "cv" },
 ];
 ---
 

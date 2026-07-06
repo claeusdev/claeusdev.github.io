@@ -7,7 +7,10 @@ interface Heading {
 
 const { headings } = Astro.props as { headings: Heading[] };
 // Only h2/h3, and only show the TOC when there's enough to navigate.
-const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
+// The autolink plugin appends a literal "#" to every heading; strip it.
+const toc = headings
+  .filter((h) => h.depth === 2 || h.depth === 3)
+  .map((h) => ({ ...h, text: h.text.replace(/#\s*$/, "").trim() }));
 const show = toc.length >= 3;
 ---
 

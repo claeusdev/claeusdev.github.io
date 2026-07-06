@@ -11,7 +11,7 @@ import {
   SITE_DESCRIPTION,
 } from "../consts";
 
-// Show a curated handful of projects on the homepage.
+// A curated handful of projects, presented as a plain list.
 const featuredProjects = PROJECTS.slice(0, 6);
 
 const jsonLd = {
@@ -21,7 +21,7 @@ const jsonLd = {
   description: SITE_DESCRIPTION,
   email: `mailto:${EMAIL}`,
   url: new URL("/", Astro.site).href,
-  jobTitle: "Software Engineer and Independent Researcher",
+  jobTitle: "Product Engineer",
   sameAs: [
     `https://github.com/${GITHUB_USERNAME}`,
     LINKEDIN_URL,
@@ -29,249 +29,260 @@ const jsonLd = {
   ],
 };
 
-// Get recent posts (latest 5)
+// Recent posts (latest 5)
 const posts = (await getCollection("posts"))
   .filter((post) => !post.data.draft)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 5);
 
-// Get research papers
-const research = (await getCollection("research"))
-  .filter((paper) => !paper.data.draft)
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, 3);
-
 function formatDate(date: Date): string {
   return date.toLocaleDateString("en-US", {
     year: "numeric",
-    month: "long",
+    month: "short",
     day: "numeric",
   });
 }
 ---
 
 <BaseLayout jsonLd={jsonLd}>
-  <div class="container">
-    <!-- Bio Section — text + photo side by side -->
-    <section class="bio-section">
-      <div class="bio-content">
-        <div class="bio-text">
-          <p class="eyebrow">Software Engineer · Independent Researcher</p>
-          <h1 class="bio-name">{AUTHOR}</h1>
-          <p>
-            I'm a software engineer and independent researcher focused on how
-            programs are specified, reasoned about, and made reliable through
-            programming language theory, semantics, and formal methods. I hold
-            an MSc in Advanced Computer Science from the
-            <a href="https://le.ac.uk">University of Leicester</a>, where my
-            thesis focused on operational semantics.
-          </p>
-          <p>
-            I'm currently a Product Engineer at
-            <a href="https://hello-charles.com">charles</a> in Berlin, and was
-            previously a frontend product engineer at
-            <a href="https://www.suitepad.de">SuitePad</a>. Before that, I
-            worked at companies including
-            <a href="https://rhino.com">Rhino</a>,
-            <a href="https://leafly.com">Leafly</a>,
-            <a href="https://andela.com">Andela</a>, and
-            <a href="https://housinganywhere.com">HousingAnywhere</a>, spanning
-            frontend, backend, and infrastructure. I continue independent
-            research and writing at the intersection of programming language
-            theory, semantics, and practical systems.
-          </p>
-          <p>
-            I'm on
-            <a href={`https://github.com/${GITHUB_USERNAME}`}>GitHub</a>,
-            <a href={LINKEDIN_URL}>LinkedIn</a>, and
-            <a href={`https://twitter.com/${TWITTER_USERNAME}`}>Twitter</a>. To
-            get in touch, email me at
-            <a href={`mailto:${EMAIL}`}>{EMAIL}</a>.
-          </p>
-        </div>
-        <img
-          src="https://avatars.githubusercontent.com/u/17507528?v=4"
-          alt="Nana Adjei Manu"
-          class="bio-photo"
-        />
-      </div>
-    </section>
+  <div class="container home">
+    <!-- The site header carries the name; this completes the sentence. -->
+    <h1 class="opener">
+      <span class="quiet">is a</span> product engineer,<br />
+      <span class="quiet">an</span> open-source builder,<br />
+      <span class="quiet">and a</span> writer.
+    </h1>
 
-    <!-- Open Source Projects -->
-    <section class="section">
-      <h2>Open Source</h2>
-      <p class="section-lede">
-        Tools and libraries across programming languages, systems, and tooling.
-        More on <a href={`https://github.com/${GITHUB_USERNAME}`}>GitHub</a>.
+    <div class="intro">
+      <p>
+        I work at <a href="https://hello-charles.com">charles</a> in Berlin,
+        building AI-native conversational commerce for consumer brands.
       </p>
-      <div class="project-grid">
-        {
-          featuredProjects.map((project) => (
-            <a
-              href={project.url}
-              target="_blank"
-              rel="noopener"
-              class="project-card"
-            >
-              <span class="project-card-name">{project.name}</span>
-              <span class="project-card-desc">{project.description}</span>
+      <p>
+        Product engineering, for me, means owning the whole slice — from
+        database schema to pixels, from idea to production, and the metrics
+        after launch.
+      </p>
+      <p>
+        I've done that for eight years across frontend, backend, and
+        infrastructure at
+        <a href="https://www.suitepad.de">SuitePad</a>,
+        <a href="https://housinganywhere.com">HousingAnywhere</a>,
+        <a href="https://andela.com">Andela</a>,
+        <a href="https://rhino.com">Rhino</a>, and
+        <a href="https://leafly.com">Leafly</a>.
+      </p>
+      <p>
+        I care about <em>type systems</em>, <em>fast interfaces</em>, and
+        software that doesn't fall over.
+      </p>
+    </div>
+
+    <p class="list-label">Notable open-source work</p>
+
+    <div class="oss-list">
+      {
+        featuredProjects.map((project) => (
+          <div class="oss-item">
+            <span class="oss-desc">
+              {project.description}
               {project.tags && (
-                <span class="tag-list">
-                  {project.tags.map((tag) => (
-                    <span class="tag">{tag}</span>
-                  ))}
-                </span>
+                <span class="oss-tags">{project.tags.join(" · ")}</span>
               )}
-            </a>
-          ))
-        }
-      </div>
-      <p class="section-more">
-        <a href="/projects">All projects →</a>
-      </p>
-    </section>
-
-    <!-- Selected Publications -->
-    {
-      research.length > 0 && (
-        <section class="section">
-          <h2>Selected Publications</h2>
-          <div class="publications-list">
-            {research.map((paper) => (
-              <div class="publication-item">
-                <a href={`/research/${paper.slug}/`} class="publication-title">
-                  {paper.data.title}
-                </a>
-                {paper.data.venue && (
-                  <p class="publication-venue">{paper.data.venue}</p>
-                )}
-              </div>
-            ))}
-          </div>
-          <p>
-            <a href="/research">All papers →</a>
-          </p>
-        </section>
-      )
-    }
-
-    <!-- Recent Blog Posts -->
-    <section class="section">
-      <h2>Recent Posts</h2>
-      <div class="post-list">
-        {
-          posts.map((post) => (
-            <article class="post-item">
-              <a href={`/posts/${post.slug}/`} class="post-link">
-                {post.data.title}
+            </span>
+            <span class="oss-name">
+              <a href={project.url} target="_blank" rel="noopener">
+                {project.name}
               </a>
-              <time class="post-date" datetime={post.data.date.toISOString()}>
-                {formatDate(post.data.date)}
-              </time>
-            </article>
-          ))
-        }
-      </div>
-      <p class="section-more">
-        <a href="/posts">All posts →</a>
+              <span class="oss-arrow" aria-hidden="true">↗</span>
+            </span>
+          </div>
+        ))
+      }
+    </div>
+
+    <p class="list-label">Recent writing</p>
+
+    <div class="writing-list">
+      {
+        posts.map((post) => (
+          <article class="writing-item">
+            <a href={`/posts/${post.slug}/`}>{post.data.title}</a>
+            <time datetime={post.data.date.toISOString()}>
+              {formatDate(post.data.date)}
+            </time>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="outro">
+      <p>
+        More on the <a href="/posts">blog</a> and the
+        <a href="/projects">projects</a> page. I'm on
+        <a href={`https://github.com/${GITHUB_USERNAME}`}>GitHub</a>,
+        <a href={LINKEDIN_URL}>LinkedIn</a>, and
+        <a href={`https://twitter.com/${TWITTER_USERNAME}`}>Twitter</a> — or
+        email me at <a href={`mailto:${EMAIL}`}>{EMAIL}</a>.
       </p>
-    </section>
+    </div>
   </div>
 </BaseLayout>
 
 <style>
-  .bio-section {
-    margin-bottom: var(--space-2xl);
+  .home {
+    padding-top: 0;
   }
 
-  .bio-content {
+  /* Broken-line opener that reads as a continuation of the header name */
+  .opener {
+    font-size: var(--text-xl);
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+    margin: 0 0 var(--space-2xl);
+  }
+
+  .opener .quiet {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: 0;
+    color: var(--color-text-muted);
+  }
+
+  .intro p,
+  .outro p {
+    max-width: 60ch;
+  }
+
+  .intro a,
+  .outro a {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+    text-decoration-color: color-mix(in srgb, var(--color-link) 40%, transparent);
+  }
+
+  .intro a:hover,
+  .outro a:hover {
+    text-decoration-color: var(--color-link);
+  }
+
+  .intro em {
+    font-family: var(--font-serif);
+    font-size: 1.06em;
+  }
+
+  .list-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--color-text-muted);
+    margin: var(--space-3xl) 0 var(--space-lg);
+  }
+
+  .oss-list {
     display: flex;
-    gap: var(--space-xl);
-    align-items: flex-start;
-  }
-
-  .bio-text {
-    flex: 1;
-  }
-
-  .bio-name {
-    font-size: var(--text-4xl);
-    margin: 0 0 var(--space-md);
-    line-height: 1.1;
-  }
-
-  .bio-photo {
-    width: 150px;
-    height: 150px;
-    min-width: 150px;
-    object-fit: cover;
-    flex-shrink: 0;
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--color-border);
-  }
-
-  .section-lede {
-    color: var(--color-text-secondary);
-    margin-bottom: var(--space-lg);
-  }
-
-  .section-more {
-    margin-top: var(--space-lg);
-    font-family: var(--font-sans);
-    font-size: var(--text-sm);
-  }
-
-  .project-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    flex-direction: column;
     gap: var(--space-md);
   }
 
-  .project-card {
+  .oss-item {
+    display: grid;
+    grid-template-columns: 1fr 11rem;
+    gap: var(--space-md);
+    align-items: baseline;
+  }
+
+  .oss-name {
+    font-weight: 600;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .oss-name a {
+    text-decoration: none;
+  }
+
+  .oss-name a:hover {
+    text-decoration: underline;
+  }
+
+  .oss-arrow {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    margin-left: 0.25em;
+    display: inline-block;
+    transition: color var(--transition), transform var(--transition);
+  }
+
+  .oss-item:hover .oss-arrow {
+    color: var(--color-link-hover);
+    transform: translate(1px, -1px);
+  }
+
+  .oss-desc {
+    color: var(--color-text-secondary);
+  }
+
+  .oss-tags {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    margin-top: 0.2rem;
+  }
+
+  .writing-list {
     display: flex;
     flex-direction: column;
-    gap: var(--space-xs);
-    padding: var(--space-md);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
+    gap: var(--space-sm);
+  }
+
+  .writing-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-md);
+  }
+
+  .writing-item a {
     text-decoration: none;
-    color: inherit;
-    transition: border-color var(--transition), background var(--transition);
   }
 
-  .project-card:hover {
-    border-color: var(--color-accent);
-    background: var(--color-accent-light);
-    text-decoration: none;
+  .writing-item a:hover {
+    text-decoration: underline;
   }
 
-  .project-card-name {
-    font-family: var(--font-sans);
-    font-weight: 600;
-    color: var(--color-text);
+  .writing-item time {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    white-space: nowrap;
   }
 
-  .project-card-desc {
-    font-size: var(--text-sm);
-    color: var(--color-text-secondary);
-    line-height: 1.6;
-    flex: 1;
+  .outro {
+    margin-top: var(--space-2xl);
   }
 
   @media (max-width: 640px) {
-    .bio-content {
-      flex-direction: column-reverse;
-      align-items: flex-start;
-    }
-
-    .bio-photo {
-      width: 110px;
-      height: 110px;
-      min-width: 110px;
-    }
-
-    .project-grid {
+    .oss-item {
       grid-template-columns: 1fr;
+      gap: var(--space-xs);
+    }
+
+    /* Stacked: lead with the project name again */
+    .oss-name {
+      order: -1;
+      text-align: left;
+    }
+
+    .writing-item {
+      flex-direction: column;
+      gap: 0.15rem;
     }
   }
 </style>

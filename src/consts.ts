@@ -1,6 +1,6 @@
 export const SITE_TITLE = "Nana Adjei Manu";
 export const SITE_DESCRIPTION =
-  "Software engineer and independent researcher working in programming language theory, semantics, formal methods, and data systems.";
+  "Product engineer in Berlin building web products end-to-end — and writing about type systems, semantics, and reliable software.";
 export const AUTHOR = "Nana Adjei Manu";
 export const EMAIL = "n.k.a.manu06@gmail.com";
 export const GITHUB_USERNAME = "naamanu";
