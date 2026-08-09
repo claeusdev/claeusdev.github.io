@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Anchor links appended to headings by the post layout */
+  .heading-anchor {
+    @apply text-stone-400 no-underline opacity-0 transition-opacity;
+  }
+  h2:hover .heading-anchor,
+  h3:hover .heading-anchor {
+    @apply opacity-100;
+  }
+}
+
+@layer components {
+  /* Code blocks scroll on their own rather than widening the page */
+  .prose pre {
+    @apply overflow-x-auto;
+  }
+
+  /* KaTeX display math on narrow screens */
+  .katex-display {
+    @apply overflow-x-auto overflow-y-hidden py-1;
+  }
+}

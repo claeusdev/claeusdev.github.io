@@ -19,24 +19,31 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: npm
 
-      - name: Install dependencies
+      - name: Install CSS toolchain
         run: npm ci
 
-      - name: Type & content check
-        run: npx astro check
-        continue-on-error: true
+      - name: Build CSS
+        run: npm run build:css
 
-      - name: Build
-        run: npm run build
+      - name: Build with Jekyll
+        run: bundle exec jekyll build
+        env:
+          JEKYLL_ENV: production
 
       - name: Check internal links
         uses: lycheeverse/lychee-action@v2
         with:
-          args: "--offline --base dist --no-progress 'dist/**/*.html'"
+          args: "--offline --base _site --no-progress '_site/**/*.html'"
           fail: true

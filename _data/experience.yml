@@ -1,0 +1,90 @@
+- company: charles (charlesAI)
+  role: Product Engineer
+  location: Berlin, Germany
+  duration: May 2026 – Present
+  details:
+    - >-
+      Product engineer at **charles**, an AI-native conversational marketing and
+      commerce platform for consumer brands, building customer-facing product
+      across the messaging and commerce experience.
+
+- company: SuitePad GmbH
+  role: Product Engineer (Frontend)
+  location: Berlin, Germany
+  duration: Jan 2025 – Apr 2026
+  details:
+    - >-
+      Frontend product engineer building and shipping features across SuitePad's
+      product.
+
+- company: Ravka Consult
+  role: Senior Product Engineer (Consulting)
+  location: Rotterdam, NL
+  duration: Jan 2024 – Jul 2025
+  details:
+    - >-
+      Pioneered **BearSignals**, an intelligent observability platform inspired
+      by the academic STEAM paper. Designed a cohesive architecture with a Go
+      ingestion engine, Python analytics layer, and React frontend for seamless
+      stateful monitoring.
+    - >-
+      Delivered a commercial-grade, high-throughput data pipeline with automated
+      root cause analysis, reducing system debugging time and improving
+      developer insight.
+    - >-
+      Mentored junior engineers in data pipeline design and API integration best
+      practices.
+
+- company: HousingAnywhere
+  role: Senior Frontend Engineer
+  location: Rotterdam, Netherlands
+  duration: Apr 2022 – Jan 2024
+  details:
+    - >-
+      Led a complete overhaul of the front-end search infrastructure using React
+      and TypeScript, resulting in a **35% increase** in search-to-booking
+      conversion.
+    - >-
+      Improved UI search performance by **40%** through incremental prefetching
+      and caching, reducing load time for millions of users.
+    - >-
+      Architected and implemented a full-stack feature flagging console (React,
+      TypeScript, Go), cutting experiment turnaround from days to minutes.
+
+- company: Andela
+  role: Senior Software Engineer (Contract)
+  location: Remote / New York, US
+  duration: May 2021 – Dec 2023
+  details:
+    - >-
+      Provided senior-level engineering for global clients, focusing on
+      full-stack development, platform modernization, and scalable system design.
+    - >-
+      **SayRhino:** Built an event-driven system using Sidekiq and Redis to scale
+      post-fulfillment operations; modularized a React codebase with Tailwind
+      CSS, reducing maintenance by 25%. Designed CI/CD pipelines with GitHub
+      Actions to enhance reliability.
+    - >-
+      **Leafly Inc:** Directed Ruby on Rails upgrade (2.5→3.0) improving
+      performance and security. Built GraphQL APIs and optimized search logic,
+      reducing backend query times by 30%. Integrated Datadog monitoring for
+      observability.
+
+- company: Petra Trust
+  role: Software Engineer
+  location: Accra, Ghana
+  duration: Dec 2019 – Jan 2021
+  details:
+    - >-
+      Architected and developed **Phoenix**, a unified CRM system with a GraphQL
+      API (Ruby, PostgreSQL) and responsive React UI, reducing user task
+      completion time by 25%.
+
+- company: VendyAds
+  role: Frontend Engineer
+  location: Accra, Ghana
+  duration: Jan 2018 – Jun 2019
+  details:
+    - >-
+      Developed interactive campaign management dashboards with React and Redux,
+      improving analytics responsiveness and client satisfaction.

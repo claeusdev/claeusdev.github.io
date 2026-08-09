@@ -1,0 +1,45 @@
+---
+layout: default
+title: Research
+description: Selected work on semantics, type systems, and observable systems.
+permalink: /research/
+---
+
+<h1 class="text-2xl font-semibold mb-2">{{ page.title }}</h1>
+<p class="text-md text-gray-700 mb-12">{{ page.description }}</p>
+
+{% for item in site.data.research %}
+  <div class="mb-6 pb-6 border-b border-gray-200 last:border-b-0">
+    <h2 class="text-lg font-semibold mb-1">{{ item.title }}</h2>
+
+    <p class="text-md text-gray-600 mb-1">
+      {{ item.kind }}{% if item.venue %} | {{ item.venue }}{% endif %}{% if item.year %} | {{ item.year }}{% endif %}
+    </p>
+
+    {% if item.authors %}
+      <p class="mb-1">
+        {% for author in item.authors %}
+          {%- if author == site.author.name -%}
+            <strong>{{ author }}</strong>
+          {%- else -%}
+            {{ author }}
+          {%- endif -%}
+          {%- unless forloop.last %}, {% endunless -%}
+        {% endfor %}
+      </p>
+    {% endif %}
+
+    {% if item.description %}
+      <p class="text-gray-700 mb-2">{{ item.description }}</p>
+    {% endif %}
+
+    {% if item.links %}
+      <div class="flex flex-wrap gap-x-3">
+        {% for link in item.links %}
+          <a href="{{ link.url }}"{% if link.url contains '://' %} target="_blank" rel="noopener noreferrer"{% endif %}
+             class="text-blue-600 hover:text-blue-800 transition duration-300">[{{ link.label }}]</a>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+{% endfor %}

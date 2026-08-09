@@ -1,8 +1,13 @@
-# build output
-dist/
+# Jekyll build output
+_site/
+.jekyll-cache/
+.jekyll-metadata
+.sass-cache/
 
-# generated types
-.astro/
+# Ruby
+vendor/
+.bundle/
+.ruby-lsp/
 
 # dependencies
 node_modules/
@@ -23,9 +28,3 @@ pnpm-debug.log*
 # IDE
 .idea/
 .vscode/
-
-# Jekyll (backup)
-.jekyll-cache/
-_site/
-.sass-cache/
-.ruby-lsp/
