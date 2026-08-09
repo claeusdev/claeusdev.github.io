@@ -1,0 +1,26 @@
+<header>
+  <div class="max-w-3xl mx-auto px-4 py-6">
+    <h1 class="text-2xl">
+      <a href="{{ '/' | relative_url }}" class="hover:text-blue-600 transition duration-300">{{ site.title }}</a>
+    </h1>
+    <nav class="mt-3 text-sm">
+      <ul class="flex flex-wrap gap-x-6 gap-y-2">
+        {% for item in site.data.nav %}
+          {% assign item_url = item.url | relative_url %}
+          {% if item.url == '/' %}
+            {% assign is_active = false %}
+            {% if page.url == '/' %}{% assign is_active = true %}{% endif %}
+          {% else %}
+            {% assign is_active = false %}
+            {% if page.url contains item.url %}{% assign is_active = true %}{% endif %}
+          {% endif %}
+          <li>
+            <a href="{{ item_url }}"
+               class="transition duration-300 hover:text-blue-600 {% if is_active %}text-gray-900 underline underline-offset-4{% else %}text-gray-600{% endif %}"
+               {% if is_active %}aria-current="page"{% endif %}>{{ item.title }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </nav>
+  </div>
+</header>

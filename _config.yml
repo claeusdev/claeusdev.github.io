@@ -1,0 +1,69 @@
+title: Nana Adjei Manu
+tagline: Product engineer
+description: >-
+  Product engineer in Berlin building web products end-to-end — and writing
+  about type systems, semantics, and reliable software.
+url: "https://nanamanu.com"
+baseurl: ""
+
+author:
+  name: Nana Adjei Manu
+  email: n.k.a.manu06@gmail.com
+
+github_username: naamanu
+twitter_username: nmanu__
+linkedin_url: "https://linkedin.com/in/nana-adjei-manu"
+
+markdown: kramdown
+highlighter: rouge
+
+kramdown:
+  input: GFM
+  hard_wrap: false
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    block:
+      line_numbers: false
+  # Leave $$...$$ untouched in the HTML so client-side KaTeX renders it.
+  # Only posts with `math: true` load KaTeX (see _includes/head.html).
+  math_engine: null
+
+permalink: /blog/:slug/
+
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+  - jekyll-archives
+
+feed:
+  path: /feed.xml
+
+jekyll-archives:
+  enabled:
+    - tags
+  layout: tag
+  permalinks:
+    tag: "/tags/:name/"
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+
+sass:
+  style: compressed
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - package.json
+  - package-lock.json
+  - node_modules
+  - tailwind.config.js
+  - assets/css/tailwind.css
+  - README.md
+  - LICENSE
+  - vendor

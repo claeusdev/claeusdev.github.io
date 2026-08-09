@@ -1,0 +1,53 @@
+- name: L-Language
+  description: >-
+    A minimal functional language in Haskell with a React visualizer for
+    evaluation and operational semantics.
+  url: https://github.com/claeusdev/l-lang
+  tags: [Haskell, React, PLT]
+
+- name: Rtpl
+  description: >-
+    A low-latency market data pipeline for trading workloads, designed for
+    sub-5ms message processing.
+  url: https://github.com/claeusdev/rtpipe
+  tags: [Systems, Trading, Low Latency]
+
+- name: Sqll
+  description: >-
+    An open-source Python SQL client built around SQLite for embedded workflows.
+  url: https://github.com/claeusdev/sqll
+  tags: [Python, SQL, Library]
+
+- name: Pricc
+  description: >-
+    A C project generator written in Rust for faster systems development setup.
+  url: https://github.com/claeusdev/pricc
+  tags: [Rust, C, Tooling]
+
+- name: rcv
+  description: >-
+    A Rust resume generator that converts declarative .rcv files into PDF output.
+  url: https://github.com/naamanu/rcv
+  tags: [Rust, PDF, CLI]
+
+- name: cathtml
+  description: >-
+    A type-safe, composable DSL for building HTML pages in OCaml.
+  url: https://github.com/naamanu/cathtml
+  tags: [OCaml, DSL, HTML]
+
+- name: gurl
+  description: >-
+    A CLI wrapper around curl for faster and more ergonomic terminal usage.
+  url: https://github.com/naamanu/gurl
+  tags: [Rust, CLI, Tooling]
+
+- name: raptur
+  description: An Express-inspired router for TypeScript backend services.
+  url: https://github.com/naamanu/raptur
+  tags: [TypeScript, Router, Backend]
+
+- name: cashapp
+  description: A peer-to-peer payments service prototype.
+  url: https://github.com/naamanu/cashapp
+  tags: [Go, Payments, System]
