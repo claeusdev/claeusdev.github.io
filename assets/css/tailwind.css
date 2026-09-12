@@ -14,6 +14,34 @@
 }
 
 @layer components {
+  /* Small-caps section label, as on an academic homepage */
+  .label {
+    @apply text-[13px] font-semibold uppercase tracking-[0.12em] text-stone-500;
+  }
+  /* Kind/venue line under a research entry */
+  .kind {
+    @apply text-[13px] uppercase tracking-[0.06em] text-stone-400;
+  }
+  /* Monospace date in a dated list */
+  .date {
+    @apply font-mono text-xs text-stone-400 whitespace-nowrap;
+  }
+  /* A dated list row: fixed date column, then the entry */
+  .dated {
+    @apply grid grid-cols-[7.5em_minmax(0,1fr)] gap-x-4 items-baseline;
+  }
+  .link {
+    @apply text-blue-900 underline decoration-1 underline-offset-[3px] hover:text-black;
+  }
+  .quiet-link {
+    @apply text-stone-500 no-underline hover:text-black hover:underline underline-offset-[3px];
+  }
+
+  /* Rouge paints highlighted fences; make its background match plain ones */
+  .highlight, .highlight pre {
+    @apply bg-parchment;
+  }
+
   /* Code blocks scroll on their own rather than widening the page */
   .prose pre {
     @apply overflow-x-auto;

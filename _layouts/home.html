@@ -1,6 +1,52 @@
 ---
 layout: default
 ---
-<article class="prose max-w-none">
+<h1 class="sr-only">{{ page.title }}</h1>
+
+<section class="prose mb-10">
   {{ content }}
-</article>
+</section>
+
+<section class="mb-10">
+  <h2 class="label mb-4">Selected research</h2>
+  <ul class="flex flex-col gap-y-4">
+    {% for item in site.data.research %}
+      <li class="flex flex-col gap-y-0.5">
+        {% if item.links and item.links.first %}
+          <a href="{{ item.links.first.url }}" class="link">{{ item.title }}</a>
+        {% else %}
+          <span>{{ item.title }}</span>
+        {% endif %}
+        <span class="kind">{{ item.kind }}{% if item.venue %} &middot; {{ item.venue }}{% endif %} &middot; {{ item.year }}</span>
+        {% if item.description %}
+          <p class="text-[15px] text-stone-700">{{ item.description }}</p>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</section>
+
+<section class="mb-10">
+  <h2 class="label mb-4">Writing</h2>
+  <ul class="flex flex-col gap-y-1.5 text-[16px]">
+    {% for post in site.posts %}
+      <li class="dated">
+        <time class="date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d %b %Y" }}</time>
+        <a href="{{ post.url | relative_url }}" class="link">{{ post.title }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+</section>
+
+<section>
+  <h2 class="label mb-4">Projects</h2>
+  <ul class="flex flex-col gap-y-1.5 text-[16px]">
+    {% for project in site.data.projects %}
+      <li>
+        <a href="{{ project.url }}" target="_blank" rel="noopener noreferrer" class="link">{{ project.name }}</a>
+        <span class="text-stone-400">&middot;</span>
+        {{ project.description }}
+      </li>
+    {% endfor %}
+  </ul>
+</section>

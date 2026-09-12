@@ -5,14 +5,10 @@ permalink: /404.html
 sitemap: false
 ---
 
-<h1 class="text-2xl font-semibold mb-2">404</h1>
-<p class="text-md text-gray-700 mb-12">That page doesn't exist.</p>
+{% include page-title.html title=page.title description="That page doesn't exist." %}
 
 <p>
-  Try the <a href="{{ '/blog/' | relative_url }}"
-     class="text-blue-600 hover:text-blue-800 transition duration-300">blog</a>,
-  browse by <a href="{{ '/tags/' | relative_url }}"
-     class="text-blue-600 hover:text-blue-800 transition duration-300">topic</a>,
-  or head <a href="{{ '/' | relative_url }}"
-     class="text-blue-600 hover:text-blue-800 transition duration-300">home</a>.
+  Try the <a href="{{ '/blog/' | relative_url }}" class="link">blog</a>,
+  browse by <a href="{{ '/tags/' | relative_url }}" class="link">topic</a>,
+  or head <a href="{{ '/' | relative_url }}" class="link">home</a>.
 </p>

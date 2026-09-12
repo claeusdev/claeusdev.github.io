@@ -1,0 +1,10 @@
+{%- comment -%}
+  Page heading: title plus an optional one-line description.
+    {% include page-title.html title=page.title description=page.description %}
+{%- endcomment -%}
+<div class="mb-10 flex flex-col gap-y-2">
+  <h1 class="text-[26px] font-semibold leading-tight tracking-tight">{{ include.title }}</h1>
+  {% if include.description %}
+    <p class="text-stone-600 italic">{{ include.description }}</p>
+  {% endif %}
+</div>

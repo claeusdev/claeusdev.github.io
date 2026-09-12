@@ -1,22 +1,19 @@
 ---
 layout: default
-title: Tags
+title: Topics
 description: Everything I've written, grouped by topic.
 permalink: /tags/
 ---
 
-<h1 class="text-2xl font-semibold mb-2">{{ page.title }}</h1>
-<p class="text-md text-gray-700 mb-12">{{ page.description }}</p>
+{% include page-title.html title=page.title description=page.description %}
 
-<ul class="flex flex-wrap gap-x-4 gap-y-2">
+<ul class="flex flex-wrap gap-x-5 gap-y-2 text-[16px]">
   {% assign tags = site.tags | sort %}
   {% for tag in tags %}
     {% assign tag_slug = tag[0] | slugify %}
     <li>
-      <a href="{{ '/tags/' | append: tag_slug | append: '/' | relative_url }}"
-         class="text-blue-600 hover:text-blue-800 transition duration-300">
-        #{{ tag[0] }} <span class="text-gray-500">({{ tag[1].size }})</span>
-      </a>
+      <a href="{{ '/tags/' | append: tag_slug | append: '/' | relative_url }}" class="link">{{ tag[0] }}</a>
+      <span class="date">{{ tag[1].size }}</span>
     </li>
   {% endfor %}
 </ul>

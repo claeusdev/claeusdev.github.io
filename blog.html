@@ -5,9 +5,10 @@ description: Thoughts on type systems, semantics, and building software that hol
 permalink: /blog/
 ---
 
-<h1 class="text-2xl font-semibold mb-2">{{ page.title }}</h1>
-<p class="text-md text-gray-700 mb-12">{{ page.description }}</p>
+{% include page-title.html title=page.title description=page.description %}
 
-{% for post in site.posts %}
-  {% include post-list-item.html post=post %}
-{% endfor %}
+<ul class="flex flex-col gap-y-5">
+  {% for post in site.posts %}
+    {% include post-list-item.html post=post %}
+  {% endfor %}
+</ul>

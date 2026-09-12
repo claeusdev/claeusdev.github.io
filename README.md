@@ -31,7 +31,7 @@ compiled CSS after a rebuild.
 | `_data/` | `nav`, `projects`, `experience`, `research` — content for the non-blog pages |
 | `assets/css/tailwind.css` | Tailwind source |
 | `assets/css/main.css` | Compiled output (committed) |
-| `assets/css/syntax.css` | Rouge monokai theme, via `rougify style monokai` |
+| `assets/css/syntax.css` | Rouge github theme, via `rougify style github`, background swapped to the site's code fill |
 
 Pages live at the repo root (`index.md`, `blog.html`, `research.html`,
 `projects.html`, `cv.html`, `tags.html`, `404.html`).

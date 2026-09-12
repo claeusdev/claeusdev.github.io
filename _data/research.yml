@@ -4,21 +4,22 @@
 # year, authors (your own name is bolded automatically — see research.html),
 # optional description, and any number of links.
 #
-# NOTE: seeded from your MSc thesis and public repositories. Edit freely —
+# NOTE: seeded from public repositories. Edit freely —
 # add venues, arXiv links, and co-authors as they land.
 
-- title: "Operational Semantics for a Small Functional Language"
-  kind: MSc Thesis
-  venue: University of Leicester
-  year: 2023
+- title: "AgentLang (AGL): A Typed Language for Agentic Workflows"
+  kind: Repo
+  year: 2026
   authors:
     - Nana Adjei Manu
   description: >-
-    A formal treatment of small-step and big-step operational semantics for a
-    minimal functional language with variables, conditionals, and functions.
+    A small typed DSL for agentic workflows, implemented as a Rust library and
+    CLI: agents and tasks with typed inputs and outputs, composed into pipelines
+    with parallel steps, retry and fallback, and run against deterministic mock
+    handlers or live OpenAI and Anthropic adapters.
   links:
-    - label: Series
-      url: /blog/operational-semantics-1-formal-intro/
+    - label: GitHub
+      url: https://github.com/naamanu/agl
 
 - title: "rarepath: Observability-Preserving Trace Sampling"
   kind: Repo
@@ -41,9 +42,13 @@
   description: >-
     A small functional language implemented in Haskell, paired with a React
     visualizer that steps through evaluation and operational semantics rules.
+    Grew out of my MSc thesis on operational semantics at the University of
+    Leicester.
   links:
     - label: GitHub
       url: https://github.com/claeusdev/l-lang
+    - label: Series
+      url: /blog/operational-semantics-1-formal-intro/
 
 - title: "causality: Ranked Root-Cause Hypotheses from Logs and Traces"
   kind: Repo

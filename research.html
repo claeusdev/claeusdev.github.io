@@ -5,41 +5,31 @@ description: Selected work on semantics, type systems, and observable systems.
 permalink: /research/
 ---
 
-<h1 class="text-2xl font-semibold mb-2">{{ page.title }}</h1>
-<p class="text-md text-gray-700 mb-12">{{ page.description }}</p>
+{% include page-title.html title=page.title description=page.description %}
 
-{% for item in site.data.research %}
-  <div class="mb-6 pb-6 border-b border-gray-200 last:border-b-0">
-    <h2 class="text-lg font-semibold mb-1">{{ item.title }}</h2>
-
-    <p class="text-md text-gray-600 mb-1">
-      {{ item.kind }}{% if item.venue %} | {{ item.venue }}{% endif %}{% if item.year %} | {{ item.year }}{% endif %}
-    </p>
-
-    {% if item.authors %}
-      <p class="mb-1">
-        {% for author in item.authors %}
-          {%- if author == site.author.name -%}
-            <strong>{{ author }}</strong>
-          {%- else -%}
-            {{ author }}
-          {%- endif -%}
-          {%- unless forloop.last %}, {% endunless -%}
-        {% endfor %}
-      </p>
-    {% endif %}
-
-    {% if item.description %}
-      <p class="text-gray-700 mb-2">{{ item.description }}</p>
-    {% endif %}
-
-    {% if item.links %}
-      <div class="flex flex-wrap gap-x-3">
-        {% for link in item.links %}
-          <a href="{{ link.url }}"{% if link.url contains '://' %} target="_blank" rel="noopener noreferrer"{% endif %}
-             class="text-blue-600 hover:text-blue-800 transition duration-300">[{{ link.label }}]</a>
-        {% endfor %}
-      </div>
-    {% endif %}
-  </div>
-{% endfor %}
+<ul class="flex flex-col gap-y-8">
+  {% for item in site.data.research %}
+    <li class="flex flex-col gap-y-1">
+      <h2 class="font-semibold leading-snug">{{ item.title }}</h2>
+      <p class="kind">{{ item.kind }}{% if item.venue %} &middot; {{ item.venue }}{% endif %} &middot; {{ item.year }}</p>
+      {% if item.authors and item.authors.size > 1 %}
+        <p class="text-[15px] text-stone-700">
+          {% for author in item.authors %}
+            {%- if author == site.author.name -%}<strong>{{ author }}</strong>{%- else -%}{{ author }}{%- endif -%}
+            {%- unless forloop.last %}, {% endunless -%}
+          {% endfor %}
+        </p>
+      {% endif %}
+      {% if item.description %}
+        <p class="text-[15px] text-stone-700">{{ item.description }}</p>
+      {% endif %}
+      {% if item.links %}
+        <ul class="flex flex-wrap gap-x-4 text-[15px]">
+          {% for link in item.links %}
+            <li><a href="{{ link.url }}"{% if link.url contains '://' %} target="_blank" rel="noopener noreferrer"{% endif %} class="link">{{ link.label }} &rarr;</a></li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>
